@@ -15,6 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CommonApplication.class)
-@ActiveProfiles("test")
+@ActiveProfiles("development")
 public class BaseSprintTestCase extends AbstractJUnit4SpringContextTests {
 }

@@ -1,9 +1,45 @@
 spring:
   profiles: development
-db:
-  url: jdbc:hsqldb:file:testdb
-  username: sa
-  password:
+  application:
+    name: common
+  redis:
+    database: 0
+    #host: 10.5.6.212
+    password: jackie0
+    timeout: 10
+    pool:
+      max-active: 8
+      max-idle: 8
+      max-wait: -1
+      min-idle: 0
+    port: 6379
+    sentinel:
+      master: master1
+      nodes: 10.5.6.214:26379
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jackie0
+    username: jackie0
+    password: jackie0
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    validation-query: select 1 from dual
+    filters: stat,wall,log4j
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: jackie0
+      password: jackie0
 ---
 spring:
   profiles: test

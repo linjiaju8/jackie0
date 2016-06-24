@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 /**
  * 记录操作日志
- * ClassName:OperationLog <br/>
+ * ClassName:OperationLogDao <br/>
  * Date:     2015年08月14日 9:39 <br/>
  *
  * @author linjiaju

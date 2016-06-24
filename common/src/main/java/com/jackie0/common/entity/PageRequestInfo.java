@@ -1,7 +1,7 @@
 /**
  * Copyright (C),Kingmed
  *
- * @FileName: Page.java
+ * @FileName: PageRequestInfo.java
  * @Package: com.kingmed.ws.common.entity
  * @Description: 分页
  * @Author linjiaju
@@ -17,19 +17,19 @@ import java.math.BigDecimal;
 
 /**
  * 分页信息
- * ClassName:Page <br/>
+ * ClassName:PageRequestInfo <br/>
  * Date:     2015年08月08日 16:43 <br/>
  *
  * @author linjiaju
  * @see
  * @since JDK 1.8
  */
-public class Page implements Serializable {
+public class PageRequestInfo implements Serializable {
     private static final int DEF_LIMIT = 15;
     private static final int DEF_OFFSET = 0;
     private static final long serialVersionUID = -6001903009948393880L;
 
-    public Page() {
+    public PageRequestInfo() {
         limit = DEF_LIMIT;
         offset = DEF_OFFSET;
     }

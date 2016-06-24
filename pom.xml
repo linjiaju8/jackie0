@@ -34,9 +34,10 @@
         <poi.version>3.14</poi.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-collections4.version>4.1</commons-collections4.version>
-        <shiro.version>1.2.5</shiro.version>
+        <shiro.version>1.2.4</shiro.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <druid.version>1.0.20</druid.version>
+        <mysql.version>5.1.18</mysql.version>
     </properties>
 
     <!-- dependencyManagement通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
@@ -109,6 +110,13 @@
                 <version>${kaptcha.version}</version>
             </dependency>
             <!-- 就是google的kaptcha end -->
+
+            <!-- mysql驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
 
             <!--druid数据库连接池-->
             <dependency>

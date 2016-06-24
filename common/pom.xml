@@ -78,6 +78,13 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <!-- 添加ConfigurationProperties支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--Apache POI - Java API To Access Microsoft Format Files-->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -107,6 +114,14 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
 
         <!-- 就是google的kaptcha start -->
         <dependency>
@@ -114,6 +129,12 @@
             <artifactId>kaptcha</artifactId>
         </dependency>
         <!-- 就是google的kaptcha end -->
+
+        <!-- mysql驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
         <!--druid数据库连接池-->
         <dependency>

@@ -14,9 +14,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
-@EnableAutoConfiguration
+@EnableAutoConfiguration(excludeName = {
+        /*没有用到SpringSecurity功能但自动配置里有，会打出一个错误日志，但不影响应用，有强迫症排除该配置。*/
+        "org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration"})
 public class CommonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CommonApplication.class, args);
+        SpringApplication springApplication = new SpringApplication(CommonApplication.class);
+        springApplication.setWebEnvironment(false);
+        springApplication.run(args);
     }
 }

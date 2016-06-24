@@ -17,7 +17,7 @@ import java.sql.Timestamp;
  * @since JDK 1.8
  */
 @MappedSuperclass
-public class BaseEntity extends Page implements Serializable {
+public class BaseEntity extends PageRequestInfo implements Serializable {
     private static final long serialVersionUID = -8589389245694477621L;
     private String createdBy;
 
