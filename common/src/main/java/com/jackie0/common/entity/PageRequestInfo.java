@@ -25,45 +25,9 @@ public class PageRequestInfo implements Serializable {
     private static final long serialVersionUID = -6001903009948393880L;
 
     public PageRequestInfo() {
-        this(DEF_SIZE, DEF_PAGE, null);
+        page = DEF_PAGE;
+        size = DEF_SIZE;
     }
-
-    /**
-     * Creates a new {@link PageRequest}. Pages are zero indexed, thus providing 0 for {@code page} will return the first
-     * page.
-     *
-     * @param page zero-based page index.
-     * @param size the size of the page to be returned.
-     */
-    public PageRequestInfo(int page, int size) {
-        this(page, size, null);
-    }
-
-    /**
-     * Creates a new {@link PageRequest} with sort parameters applied.
-     *
-     * @param page       zero-based page index.
-     * @param size       the size of the page to be returned.
-     * @param direction  the direction of the {@link Sort} to be specified, can be {@literal null}.
-     * @param properties the properties to sort by, must not be {@literal null} or empty.
-     */
-    public PageRequestInfo(int page, int size, Sort.Direction direction, String... properties) {
-        this(page, size, new Sort(direction, properties));
-    }
-
-    /**
-     * Creates a new {@link PageRequest} with sort parameters applied.
-     *
-     * @param page zero-based page index.
-     * @param size the size of the page to be returned.
-     * @param sort can be {@literal null}.
-     */
-    public PageRequestInfo(int page, int size, Sort sort) {
-        pageRequest = new PageRequest(page, size, sort);
-        this.sort = sort;
-    }
-
-    private Sort sort;
 
     // 排序字段名称
     private String sortFieldName;
@@ -76,9 +40,6 @@ public class PageRequestInfo implements Serializable {
 
     // 每页显示多少条
     private int size;
-
-    // org.springframework.data.domain.PageRequest不能直接继承，比如在mongodb的实体中，如果继承PageRequest会操作异常
-    private PageRequest pageRequest;
 
     // 无意义，只是JPA在生成oracle分页SQL时会查出该字段，这里只是为了防止SQL报错加上该变量
     private BigDecimal ROWNUM_;
@@ -107,10 +68,6 @@ public class PageRequestInfo implements Serializable {
         this.orderMethod = orderMethod;
     }
 
-    public void setSort(Sort sort) {
-        this.sort = sort;
-    }
-
     public int getPage() {
         return page;
     }
@@ -132,7 +89,8 @@ public class PageRequestInfo implements Serializable {
      * @see org.springframework.data.domain.Pageable#getSort()
      */
     public Sort getSort() {
-        if (sort == null && StringUtils.isNotBlank(getSortFieldName()) && StringUtils.isNotBlank(getOrderMethod())) {
+        Sort sort = null;
+        if (StringUtils.isNotBlank(getSortFieldName()) && StringUtils.isNotBlank(getOrderMethod())) {
             Sort.Direction direction = Sort.Direction.ASC;
             if (Sort.Direction.DESC.toString().equalsIgnoreCase(getOrderMethod())) {
                 direction = Sort.Direction.DESC;
@@ -143,6 +101,6 @@ public class PageRequestInfo implements Serializable {
     }
 
     public PageRequest getPageRequest() {
-        return pageRequest;
+        return new PageRequest(page, size, getSort());
     }
 }

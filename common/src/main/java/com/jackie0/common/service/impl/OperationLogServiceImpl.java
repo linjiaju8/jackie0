@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 操作日志服务
@@ -56,9 +57,12 @@ public class OperationLogServiceImpl implements OperationLogService {
         if (baseOperationLog instanceof OperationLog) {
             baseOperationLogResult = operationLogDao.save((OperationLog) baseOperationLog);
         } else if (baseOperationLog instanceof MongoOperationLog) {
+            if (StringUtils.isBlank(((MongoOperationLog) baseOperationLog).getId())) {
+                // mongodb的主键不会自动生成，如果没有则手动设置
+                ((MongoOperationLog) baseOperationLog).setId(UUID.randomUUID().toString());
+            }
             baseOperationLogResult = operationLogMongoDao.save((MongoOperationLog) baseOperationLog);
         }
-        LOGGER.debug("记录客户操作日志成功-->{}", baseOperationLogResult.toString());
         return baseOperationLogResult;
     }
 
@@ -106,7 +110,7 @@ public class OperationLogServiceImpl implements OperationLogService {
     private Specification<OperationLog> getOperationLogWhereClause(final OperationLog operationLog) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(cb.equal(root.get("deletedFlag"), DeleteTag.IS_NOT_DELETED));
+            predicates.add(cb.equal(root.get("deletedFlag"), DeleteTag.IS_NOT_DELETED.getValue()));
             predicates.add(cb.equal(root.get("operationUser"), operationLog.getOperationUser()));
             // 默认查近一个月数据
             predicates.add(cb.between(root.get("creationDate"), new Timestamp(DateUtils.addMonths(new Date(), -1).getTime()), new Timestamp(System.currentTimeMillis())));
