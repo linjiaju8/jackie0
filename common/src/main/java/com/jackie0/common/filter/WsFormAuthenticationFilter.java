@@ -16,9 +16,9 @@ import javax.servlet.ServletResponse;
  * ClassName:WsFormAuthenticationFilter <br/>
  * Date:     2015年08月07日 16:50 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 public class WsFormAuthenticationFilter extends FormAuthenticationFilter {
 

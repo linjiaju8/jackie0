@@ -17,7 +17,7 @@ package com.jackie0.common.enumeration;
  * ClassName:ExcelType <br/>
  * Date:     2015年08月03日 14:32 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */

@@ -6,7 +6,7 @@ import com.jackie0.common.utils.I18nUtils;
 /**
  * 功能： 公用业务异常类
  *
- * @author linjj
+ * @author jackie0
  * @version 1.0.0
  * @date 2014/12/30 18:05
  */
@@ -33,12 +33,12 @@ public class BusinessException extends RuntimeException {
     /**
      * 错误编码
      */
-    public String errorCode;
+    private String errorCode;
 
     /**
      * 错误信息
      */
-    public String errorMsg;
+    private String errorMsg;
 
     /**
      * 根据errorCode构造异常信息

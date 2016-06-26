@@ -9,7 +9,7 @@ import java.util.GregorianCalendar;
  * ClassName:Constant <br/>
  * Date:     2015年07月29日 20:25 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */

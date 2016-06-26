@@ -10,6 +10,7 @@ import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Sort;
 
 import javax.persistence.EntityManager;
@@ -20,13 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * web自助公用DAO实现
+ * spring-data-jpa公用DAO实现
  * ClassName:BaseDaoImpl <br/>
  * Date:     2015年08月29日 10:05 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 public class BaseDaoImpl implements BaseDaoPlus {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseDaoImpl.class);
@@ -34,7 +35,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
     private EntityManager entityManager;
 
     /**
-     * @see #findByPage(Page, String, Sort, Map, Object[])
+     * @see #findByPage(PageRequestInfo, String, Sort, Map, Object[])
      */
     @Override
     public <E extends PageRequestInfo> Page<E> findByPage(E e, String sql, Object[] params) {
@@ -42,7 +43,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
     }
 
     /**
-     * @see #findByPage(Page, String, Sort, Map, Object[])
+     * @see #findByPage(PageRequestInfo, String, Sort, Map, Object[])
      */
     @Override
     public <E extends PageRequestInfo> Page<E> findByPage(E e, String sql, Map<String, Object> params) {
@@ -50,7 +51,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
     }
 
     /**
-     * @see #findByPage(Page, String, Sort, Map, Object[])
+     * @see #findByPage(PageRequestInfo, String, Sort, Map, Object[])
      */
     @Override
     public <E extends PageRequestInfo> Page<E> findByPage(E e, String sql, Sort sort, Object[] params) {
@@ -58,7 +59,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
     }
 
     /**
-     * @see #findByPage(Page, String, Sort, Map, Object[])
+     * @see #findByPage(PageRequestInfo, String, Sort, Map, Object[])
      */
     @Override
     public <E extends PageRequestInfo> Page<E> findByPage(E e, String sql, Sort sort, Map<String, Object> params) {
@@ -102,11 +103,14 @@ public class BaseDaoImpl implements BaseDaoPlus {
         List<E> list = null;
         if (total > 0) {
             resultQuery.unwrap(SQLQuery.class).setResultTransformer(new AliasToBeanResultTransformer(e.getClass()));
-            list = resultQuery.setMaxResults(e.getLimit()).setFirstResult(e.getOffset()).getResultList();
+            list = resultQuery.setMaxResults(e.getPageRequest().getPageNumber()).setFirstResult(e.getPageRequest().getOffset()).getResultList();
         }
         // 分离内存中受EntityManager管理的实体bean，让VM进行垃圾回收
         entityManager.clear();
-        return new Page<>(list, total);
+        if (list != null) {
+            new PageImpl<>(list, e.getPageRequest(), total);
+        }
+        return null;
     }
 
     /**

@@ -26,7 +26,7 @@ import java.util.List;
  * ClassName:Excel <br/>
  * Date:     2015年12月09日 16:26 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */

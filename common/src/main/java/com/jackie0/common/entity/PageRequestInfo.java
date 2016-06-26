@@ -1,58 +1,86 @@
-/**
- * Copyright (C),Kingmed
- *
- * @FileName: PageRequestInfo.java
- * @Package: com.kingmed.ws.common.entity
- * @Description: 分页
- * @Author linjiaju
- * @Date 2015年11月30日 16:45
- * @History: //修改记录
- * 〈author〉      〈time〉      〈version〉       〈desc〉
- * 修改人姓名            修改时间            版本号              描述
- */
 package com.jackie0.common.entity;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.AbstractPageRequest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 分页信息
+ * 分页请求信息
  * ClassName:PageRequestInfo <br/>
  * Date:     2015年08月08日 16:43 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */
 public class PageRequestInfo implements Serializable {
-    private static final int DEF_LIMIT = 15;
-    private static final int DEF_OFFSET = 0;
+    private static final int DEF_SIZE = 15;
+    private static final int DEF_PAGE = 1;
     private static final long serialVersionUID = -6001903009948393880L;
 
     public PageRequestInfo() {
-        limit = DEF_LIMIT;
-        offset = DEF_OFFSET;
+        this(DEF_SIZE, DEF_PAGE, null);
     }
 
+    /**
+     * Creates a new {@link PageRequest}. Pages are zero indexed, thus providing 0 for {@code page} will return the first
+     * page.
+     *
+     * @param page zero-based page index.
+     * @param size the size of the page to be returned.
+     */
+    public PageRequestInfo(int page, int size) {
+        this(page, size, null);
+    }
+
+    /**
+     * Creates a new {@link PageRequest} with sort parameters applied.
+     *
+     * @param page       zero-based page index.
+     * @param size       the size of the page to be returned.
+     * @param direction  the direction of the {@link Sort} to be specified, can be {@literal null}.
+     * @param properties the properties to sort by, must not be {@literal null} or empty.
+     */
+    public PageRequestInfo(int page, int size, Sort.Direction direction, String... properties) {
+        this(page, size, new Sort(direction, properties));
+    }
+
+    /**
+     * Creates a new {@link PageRequest} with sort parameters applied.
+     *
+     * @param page zero-based page index.
+     * @param size the size of the page to be returned.
+     * @param sort can be {@literal null}.
+     */
+    public PageRequestInfo(int page, int size, Sort sort) {
+        pageRequest = new PageRequest(page, size, sort);
+        this.sort = sort;
+    }
+
+    private Sort sort;
+
     // 排序字段名称
-    private String sort;
+    private String sortFieldName;
 
     // 排序方式，asc、desc
-    private String order;
+    private String orderMethod;
+
+    // 页码
+    private int page;
 
     // 每页显示多少条
-    private Integer limit;
+    private int size;
 
-    // 数据偏移量，第一页为0
-    private Integer offset;
+    // org.springframework.data.domain.PageRequest不能直接继承，比如在mongodb的实体中，如果继承PageRequest会操作异常
+    private PageRequest pageRequest;
 
-    // 每页显示多少条
-    private Integer size;
-
-    // 数据偏移量，第一页为0
-    private Integer page;
-
-    // 无意义，只是JPA在生成分页SQL时会查出该字段，这里只是为了防止SQL报错加上该变量
+    // 无意义，只是JPA在生成oracle分页SQL时会查出该字段，这里只是为了防止SQL报错加上该变量
     private BigDecimal ROWNUM_;
 
     public BigDecimal getROWNUM_() {
@@ -63,59 +91,58 @@ public class PageRequestInfo implements Serializable {
         this.ROWNUM_ = ROWNUM_;
     }
 
-    public Integer getPage() {
-        return offset / limit + 1;
+    public String getSortFieldName() {
+        return sortFieldName;
     }
 
-    public Integer getSize() {
-        return limit;
+    public void setSortFieldName(String sortFieldName) {
+        this.sortFieldName = sortFieldName;
     }
 
-    public Integer getLimit() {
-        return limit == null ? Integer.valueOf(DEF_LIMIT) : limit;
+    public String getOrderMethod() {
+        return orderMethod;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setOrderMethod(String orderMethod) {
+        this.orderMethod = orderMethod;
     }
 
-    public Integer getOffset() {
-        return offset == null ? Integer.valueOf(DEF_OFFSET) : offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
+    public void setSort(Sort sort) {
         this.sort = sort;
     }
 
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    public Integer findOriginalPage() {
+    public int getPage() {
         return page;
     }
 
-    public Integer findOriginalSize() {
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getSize() {
         return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.data.domain.Pageable#getSort()
+     */
+    public Sort getSort() {
+        if (sort == null && StringUtils.isNotBlank(getSortFieldName()) && StringUtils.isNotBlank(getOrderMethod())) {
+            Sort.Direction direction = Sort.Direction.ASC;
+            if (Sort.Direction.DESC.toString().equalsIgnoreCase(getOrderMethod())) {
+                direction = Sort.Direction.DESC;
+            }
+            sort = new Sort(direction, sortFieldName);
+        }
+        return sort;
+    }
+
+    public PageRequest getPageRequest() {
+        return pageRequest;
     }
 }

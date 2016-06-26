@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * ClassName:OperationLogDao <br/>
  * Date:     2015年08月14日 9:39 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */

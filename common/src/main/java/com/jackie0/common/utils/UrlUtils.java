@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * 项目URL工具类，提供获取资源文件及各种路径的方法
  *
- * @author zhouxf
+ * @author jackie0
  * @version 1.0.0
  * @date 2014/12/29 18:44
  */

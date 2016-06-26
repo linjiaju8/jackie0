@@ -20,9 +20,9 @@ import java.util.Enumeration;
  * ClassName:SecurityFilter <br/>
  * Date:     2015年08月05日 9:53 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 public class SecurityFilter implements Filter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityFilter.class);

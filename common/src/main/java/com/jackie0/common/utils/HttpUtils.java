@@ -17,7 +17,7 @@ import java.util.Map;
  * ClassName:HttpUtils <br/>
  * Date:     2015年09月06日 15:24 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */

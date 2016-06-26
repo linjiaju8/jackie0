@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * ClassName:BaseEntity <br/>
  * Date:     2015年11月25日 10:34 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */
@@ -34,7 +34,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     private String bizOrgCode;
 
     @Basic
-    @Column(name = "CREATED_BY")
+    @Column(name = "CREATED_BY", length = 36, nullable = false)
     public String getCreatedBy() {
         return createdBy;
     }
@@ -44,7 +44,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "CREATION_DATE")
+    @Column(name = "CREATION_DATE", nullable = false)
     public Timestamp getCreationDate() {
         return creationDate;
     }
@@ -54,7 +54,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "LAST_UPDATED_BY")
+    @Column(name = "LAST_UPDATED_BY", length = 36, nullable = false)
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -64,7 +64,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "LAST_UPDATE_DATE")
+    @Column(name = "LAST_UPDATE_DATE", nullable = false)
     public Timestamp getLastUpdateDate() {
         return lastUpdateDate;
     }
@@ -74,7 +74,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "RECORD_VERSION")
+    @Column(name = "RECORD_VERSION", length = 8, nullable = false)
     public BigDecimal getRecordVersion() {
         return recordVersion;
     }
@@ -84,7 +84,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "DELETED_FLAG")
+    @Column(name = "DELETED_FLAG", length = 2, nullable = false)
     public String getDeletedFlag() {
         return deletedFlag;
     }
@@ -94,7 +94,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "DELETED_BY")
+    @Column(name = "DELETED_BY", length = 36)
     public String getDeletedBy() {
         return deletedBy;
     }
@@ -114,7 +114,7 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "ARCHIVE_BASE_DATE")
+    @Column(name = "ARCHIVE_BASE_DATE", nullable = false)
     public Timestamp getArchiveBaseDate() {
         return archiveBaseDate;
     }
@@ -124,25 +124,12 @@ public class BaseEntity extends PageRequestInfo implements Serializable {
     }
 
     @Basic
-    @Column(name = "BIZ_ORG_CODE")
+    @Column(name = "BIZ_ORG_CODE", nullable = false, length = 36)
     public String getBizOrgCode() {
         return bizOrgCode;
     }
 
     public void setBizOrgCode(String bizOrgCode) {
         this.bizOrgCode = bizOrgCode;
-    }
-
-    // 解决排序分页bug，如果有大量（大于每页显示的数据量至少2页的情况下）数据creationDate（排序字段）相同时会出现分页数据重复的bug，加上rowid就可以解决，且不会有性能损耗
-    private String rowid;
-
-    @Basic
-    @Column(name = "ROWID", insertable = false, updatable = false)
-    public String getRowid() {
-        return rowid;
-    }
-
-    public void setRowid(String rowid) {
-        this.rowid = rowid;
     }
 }

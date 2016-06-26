@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 /**
  * 验证工具类
  *
- * @author linjj
+ * @author jackie0
  * @date 2015/03/02
  * </p>
  * Copyright © 2014	OP-MOBILE

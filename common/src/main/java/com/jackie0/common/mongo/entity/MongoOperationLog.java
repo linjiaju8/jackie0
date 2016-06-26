@@ -19,12 +19,12 @@ import java.util.Date;
  * ClassName:CustLog <br/>
  * Date:     2015年08月11日 16:21 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 @Document
-public class OperationLog extends PageRequestInfo implements BaseOperationLog {
+public class MongoOperationLog extends PageRequestInfo implements BaseOperationLog {
 
     /**
      * 主键
@@ -93,16 +93,17 @@ public class OperationLog extends PageRequestInfo implements BaseOperationLog {
      */
     private String url;
 
+
     // 客户足迹搜索框查询条件
-    private String custLogQueryParam;
+    private String operationLogQueryParam;
 
     @Transient
-    public String getCustLogQueryParam() {
-        return custLogQueryParam;
+    public String getOperationLogQueryParam() {
+        return operationLogQueryParam;
     }
 
-    public void setCustLogQueryParam(String custLogQueryParam) {
-        this.custLogQueryParam = custLogQueryParam;
+    public void setOperationLogQueryParam(String operationLogQueryParam) {
+        this.operationLogQueryParam = operationLogQueryParam;
     }
 
     @Id

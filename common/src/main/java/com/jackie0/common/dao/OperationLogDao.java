@@ -1,13 +1,15 @@
 package com.jackie0.common.dao;
 
 
+import com.jackie0.common.entity.OperationLog;
+
 /**
- * ClassName:CustLogDao <br/>
+ * ClassName:OperationLogDao <br/>
  * Date:     2015年08月11日 16:41 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
-public interface OperationLogDao extends BaseDao<OperationLogDao, String> {
+public interface OperationLogDao extends BaseDao<OperationLog, String> {
 }

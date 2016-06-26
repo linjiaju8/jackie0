@@ -1,22 +1,21 @@
 package com.jackie0.common.service.impl;
 
-import com.jackie0.common.enumeration.OperationType;
+import com.jackie0.common.dao.OperationLogDao;
+import com.jackie0.common.entity.BaseOperationLog;
+import com.jackie0.common.entity.OperationLog;
+import com.jackie0.common.enumeration.DeleteTag;
 import com.jackie0.common.mongo.dao.OperationLogMongoDao;
-import com.jackie0.common.mongo.entity.OperationLog;
+import com.jackie0.common.mongo.entity.MongoOperationLog;
 import com.jackie0.common.service.OperationLogService;
-import com.jackie0.common.utils.DataUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -24,83 +23,94 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 客户操作日志服务
- * ClassName:CustLogServiceImpl <br/>
+ * 操作日志服务
+ * ClassName:OperationLogServiceImpl <br/>
  * Date:     2015年08月11日 16:45 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 @Service("operationLogServiceImpl")
 public class OperationLogServiceImpl implements OperationLogService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OperationLogServiceImpl.class);
 
-    @Resource
+    @Autowired
     private OperationLogMongoDao operationLogMongoDao;
 
+    @Autowired
+    private OperationLogDao operationLogDao;
+
     /**
-     * 记录客户日志
+     * 记录操作日志
      *
-     * @param operationLog 客户操作日志实体
-     * @return 新增成功后的客户日志
+     * @param baseOperationLog 操作日志实体
+     * @return 新增成功后的日志
      */
     @Override
-    public OperationLog createCustLog(OperationLog operationLog) {
-        // CustLog custLogRt = custLogDao.save(custLog); mongodb实现
-        LOGGER.debug("记录客户操作日志成功-->{}", JsonUtil.javaObjToJson(custLog));
-        DataUtils.setBaseEntityField(operationLog, OperationType.CREATE);
-        return operationLogMongoDao.save(operationLog);
+    public BaseOperationLog createOperationLog(BaseOperationLog baseOperationLog) {
+        if (baseOperationLog == null) {
+            return null;
+        }
+        BaseOperationLog baseOperationLogResult = null;
+        if (baseOperationLog instanceof OperationLog) {
+            baseOperationLogResult = operationLogDao.save((OperationLog) baseOperationLog);
+        } else if (baseOperationLog instanceof MongoOperationLog) {
+            baseOperationLogResult = operationLogMongoDao.save((MongoOperationLog) baseOperationLog);
+        }
+        LOGGER.debug("记录客户操作日志成功-->{}", baseOperationLogResult.toString());
+        return baseOperationLogResult;
     }
 
     /**
-     * 分页查询客户操作日志
+     * 根据ID获取操作日志信息
      *
-     * @param custLog 客户操作日志查询条件
-     * @return 客户操作日志分页信息
+     * @param operationLogId 操作日志ID
+     * @param clazz          操作日志的类型，觉得是使用mongodb还是关系数据库
+     * @return 操作日志信息
      */
     @Override
-    public Page<OperationLog> findByPage(OperationLog custLog) {
-        Page<OperationLog> operationLogs;
-        if (StringUtils.isBlank(custLog.getCustLogQueryParam())) {
-            operationLogs = operationLogMongoDao.findCustLogs(custLog.getOperationUser(), getCustLogPageRequest(custLog));
-        } else {
-            operationLogs = operationLogMongoDao.findCustLogs(custLog.getOperationUser(), ".*" + custLog.getCustLogQueryParam() + ".*", getCustLogPageRequest(custLog.getPage(), custLog.getSize()));
+    public <T extends BaseOperationLog> BaseOperationLog findOne(String operationLogId, Class<T> clazz) {
+        if (StringUtils.isBlank(operationLogId)) {
+            return null;
+        }
+        if (clazz == OperationLog.class) {
+            return operationLogDao.findOne(operationLogId);
+        } else if (clazz == MongoOperationLog.class) {
+            return operationLogMongoDao.findOne(operationLogId);
+        }
+        return null;
+    }
+
+    /**
+     * 分页查询操作日志
+     *
+     * @param baseOperationLog 操作日志查询条件
+     * @return 操作日志分页信息
+     */
+    @Override
+    public Page<? extends BaseOperationLog> findByPage(BaseOperationLog baseOperationLog) {
+        Page<? extends BaseOperationLog> operationLogs = null;
+        if (baseOperationLog instanceof OperationLog) {
+            operationLogs = operationLogDao.findAll(getOperationLogWhereClause((OperationLog) baseOperationLog), ((OperationLog) baseOperationLog).getPageRequest());
+        } else if (baseOperationLog instanceof MongoOperationLog) {
+            if (StringUtils.isBlank(((MongoOperationLog) baseOperationLog).getOperationLogQueryParam())) {
+                operationLogs = operationLogMongoDao.findOperationLogs(((MongoOperationLog) baseOperationLog).getOperationUser(), ((MongoOperationLog) baseOperationLog).getPageRequest());
+            } else {
+                operationLogs = operationLogMongoDao.findOperationLogs(((MongoOperationLog) baseOperationLog).getOperationUser(), ".*" + ((MongoOperationLog) baseOperationLog).getOperationLogQueryParam() + ".*", ((MongoOperationLog) baseOperationLog).getPageRequest());
+            }
         }
         return operationLogs;
     }
 
-    /**
-     * 根据ID获取客户操作日志
-     *
-     * @param operationLogId 客户操作日志ID
-     * @return 客户操作日志实体
-     */
-    @Override
-    public OperationLog findOne(String operationLogId) {
-        return operationLogMongoDao.findOne(operationLogId);
-    }
-
-    private Specification<CustLog> getCustLogWhereClause(final CustLog custLog) {
-        return new Specification<CustLog>() {
-            @Override
-            public Predicate toPredicate(Root<CustLog> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                predicates.add(cb.equal(root.get("deletedFlag"), Constant.IS_NOT_DELETED));
-                predicates.add(cb.equal(root.get("operationUser"), custLog.getOperationUser()));
-                // 默认查近一个月数据
-                predicates.add(cb.between(root.<Timestamp>get("creationDate"), new Timestamp(DateUtils.addMonths(new Date(), -1).getTime()), new Timestamp(System.currentTimeMillis())));
-                return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
-            }
+    private Specification<OperationLog> getOperationLogWhereClause(final OperationLog operationLog) {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(cb.equal(root.get("deletedFlag"), DeleteTag.IS_NOT_DELETED));
+            predicates.add(cb.equal(root.get("operationUser"), operationLog.getOperationUser()));
+            // 默认查近一个月数据
+            predicates.add(cb.between(root.get("creationDate"), new Timestamp(DateUtils.addMonths(new Date(), -1).getTime()), new Timestamp(System.currentTimeMillis())));
+            return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
-    }
-
-    /**
-     * 创建分页请求.
-     */
-    private PageRequest getCustLogPageRequest(OperationLog operationLog) {
-        Sort sort = new Sort(Sort.Direction.DESC, "creationDate");
-        sort = sort.and(new Sort("rowid"));
-        return new PageRequest(operationLog.getPage() - 1, operationLog.getSize(), sort);
     }
 }

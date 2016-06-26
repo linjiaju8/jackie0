@@ -15,7 +15,7 @@ import java.text.ParseException;
  * ClassName:CustomDateSerializer <br/>
  * Date:     2015年10月16日 14:13 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @since JDK 1.8
  */
 public class CustomTimestampEditor extends PropertyEditorSupport {

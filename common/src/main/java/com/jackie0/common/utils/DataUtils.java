@@ -25,7 +25,7 @@ import java.util.Random;
  * ClassName:DataUtils <br/>
  * Date:     2015年09月09日 21:31 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @since JDK 1.8
  */
 public class DataUtils {

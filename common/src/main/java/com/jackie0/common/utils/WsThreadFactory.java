@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * WEB自助线程工厂
  *
- * @author linjj
+ * @author jackie0
  * @date 2016/04/12
  * </p>
  */

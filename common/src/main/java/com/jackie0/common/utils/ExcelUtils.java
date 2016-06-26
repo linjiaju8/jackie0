@@ -28,7 +28,7 @@ import java.util.*;
 
 /**
  * excel 工具类， 支持xls，xlsx
- * User: linjj
+ * User: jackie0
  * Date: 13-9-24
  * Time: 下午8:37
  */

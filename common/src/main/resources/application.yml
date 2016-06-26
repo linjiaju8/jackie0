@@ -1,10 +1,15 @@
 spring:
+ # profiles不同环境配置标识，如开发、测试、生产环境等
   profiles: development
+  # 应用名称，自定义
   application:
     name: common
   redis:
+    # redis使用的数据库序号从0开始
     database: 0
-    #host: 10.5.6.212
+    #redis主机，在配置了sentinel此处可注释掉
+    host: localhost
+    #权限认证密码，如果是主从环境密码要保持一致
     password: jackie0
     timeout: 10
     pool:
@@ -13,10 +18,13 @@ spring:
       max-wait: -1
       min-idle: 0
     port: 6379
-    sentinel:
-      master: master1
-      nodes: 10.5.6.214:26379
+    # 主从的哨兵配置
+    #sentinel:
+      #master: master1
+      #哨兵节点，注意redis配置文件中要把保护模式关掉，否则会客户端连接报错，密码验证可以保留
+      #nodes: 10.5.6.214:26379
   datasource:
+    # 参考druid连接池配置https://github.com/alibaba/druid
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/jackie0
@@ -36,10 +44,17 @@ spring:
     filters: stat,wall,log4j
   data:
     mongodb:
-      host: localhost
-      port: 27017
+      uri: mongodb://localhost/mdb1
       username: jackie0
       password: jackie0
+  jpa:
+    # 为方便开发，一般在开发环境配置这几个参数，测试、生产仍以手动sql脚本为准，方便dba建模及统一管理
+    # jpa配置是否生成ddl
+    generate-ddl: true
+    hibernate:
+      # ddl自动方式，create、update等，这里再创建表时跑
+      ddl-auto: create
+    show-sql: true
 ---
 spring:
   profiles: test

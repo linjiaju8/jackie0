@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
  * ClassName:CalendarUtils <br/>
  * Date:     2015年09月08日 14:43 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.8
  */
@@ -24,9 +24,9 @@ public class CalendarUtils {
      * 获取相对于当前周偏移量的指定星期当天日期
      * 如果想按照国人习惯返回星期天且作为一周的结束可以将amount+1来获取
      *
-     * @param amount 相对当前周，周的偏移量，如：1下周，-1上周
+     * @param amount    相对当前周，周的偏移量，如：1下周，-1上周
      * @param weekField 返回指定星期几的日期
-     * @param format 日期的格式，默认：yyyy-MM-dd HH:mm:ss
+     * @param format    日期的格式，默认：yyyy-MM-dd HH:mm:ss
      * @return 偏移周的星期一当天日期
      */
     public static String geDateOffsetCurrentWeek(int amount, int weekField, String format) {

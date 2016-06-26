@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 通用Specification在平台BaseDao的基础上指定了主键类型，避免通过主键操作时有时会提示强制类型转换（然而并不需要）
- * ClassName:BaseDao <br/>
+ * {@link BaseDao}扩展类
+ * ClassName:BaseDaoPlus <br/>
  * Date:     2015年08月04日 11:09 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 @NoRepositoryBean
 public interface BaseDaoPlus {

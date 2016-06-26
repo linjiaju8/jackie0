@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
  * ClassName:CaptchaValidateFilter <br/>
  * Date:     2015年08月07日 16:24 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
- * @since JDK 1.7
+ * @since JDK 1.8
  */
 public class CaptchaValidateFilter extends AccessControlFilter {
 

@@ -1,11 +1,11 @@
 package com.jackie0.common.entity;
 
 /**
- * 客户操作日志实体类
- * ClassName:CustLog <br/>
+ * 操作日志实体接口
+ * ClassName:BaseOperationLog <br/>
  * Date:     2015年08月11日 16:21 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @see
  * @since JDK 1.7
  */

@@ -18,7 +18,7 @@ import java.util.Date;
  * ClassName:CustomDateDeserialize <br/>
  * Date:     2015年10月16日 14:13 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @since JDK 1.8
  */
 public class CustomDateDeserialize extends JsonDeserializer<Date> {

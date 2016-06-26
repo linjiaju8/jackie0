@@ -11,7 +11,7 @@ import java.util.List;
  * ClassName:CustomCollectionUtils <br/>
  * Date:     2015年11月03日 17:09 <br/>
  *
- * @author linjiaju
+ * @author jackie0
  * @since JDK 1.8
  */
 public class CustomCollectionUtils {
