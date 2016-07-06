@@ -1,7 +1,10 @@
 package com.jackie0.common;
 
+import com.jackie0.common.constant.CommonExceptionCodeConstant;
+import com.jackie0.common.utils.I18nUtils;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -76,5 +80,19 @@ public class CommonApplicationTest extends BaseSprintTestCase {
     public void testMongo() {
         MongoClientOptions mongoClientOptions = mongoClient.getMongoClientOptions();
         LOGGER.info("mongoDB配置成功，获取配置参数：{}", mongoClientOptions.toString());
+    }
+
+    @Test
+    public void testI18n() {
+        String i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, "参数1", "参数2");
+        Assert.assertNotNull(i18nMsg);
+        LOGGER.info("国际化测试成功，获取的默认国际化信息：{}", i18nMsg);
+        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, Locale.US, "参数1", "参数2");
+        Assert.assertNotNull(i18nMsg);
+        LOGGER.info("国际化测试成功，获取的en_US国际化信息：{}", i18nMsg);
+        Locale hkLocale = new Locale("zh", "HK");
+        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, hkLocale, "参数1", "参数2");
+        Assert.assertNotNull(i18nMsg);
+        LOGGER.info("国际化测试成功，获取的zh_HK国际化信息：{}", i18nMsg);
     }
 }

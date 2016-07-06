@@ -12,7 +12,9 @@
  */
 package com.jackie0.common.utils;
 
+import com.jackie0.common.constant.Constant;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -44,8 +46,15 @@ public class I18nUtils {
     public static String getMessage(String key, Locale locle, Object... args) {
         Locale thisLocale = locle;
         if (locle == null) {
-            HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            thisLocale = RequestContextUtils.getLocale(httpServletRequest);
+            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+            if (requestAttributes != null) {
+                // web环境中直接从request中获取
+                HttpServletRequest httpServletRequest = ((ServletRequestAttributes) requestAttributes).getRequest();
+                thisLocale = RequestContextUtils.getLocale(httpServletRequest);
+            } else {
+                // 非web环境中使用系统默认locale
+                thisLocale = Constant.DEF_LOCALE;
+            }
         }
         ApplicationContext springContext = ApplicationContextRegister.getApplicationContext();
         return springContext.getMessage(key, args, null, thisLocale);

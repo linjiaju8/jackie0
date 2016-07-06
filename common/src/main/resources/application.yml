@@ -52,9 +52,11 @@ spring:
     # jpa配置是否生成ddl
     generate-ddl: true
     hibernate:
-      # ddl自动方式，create、update等，这里再创建表时跑
+      # ddl自动方式，create、update等，这里在创建表时跑
       ddl-auto: create
     show-sql: true
+  messages:
+    basename: i18n/messages-exception
 ---
 spring:
   profiles: test

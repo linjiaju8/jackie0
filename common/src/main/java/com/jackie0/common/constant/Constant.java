@@ -3,6 +3,7 @@ package com.jackie0.common.constant;
 
 import java.sql.Timestamp;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * 自定义常量类
@@ -18,6 +19,11 @@ public class Constant {
      * 项目默认编码
      */
     public static final String DEF_ENC = "UTF-8";
+
+    /**
+     * 项目默认国际化地区
+     */
+    public static final Locale DEF_LOCALE = Locale.SIMPLIFIED_CHINESE;
 
     /**
      * http前缀
