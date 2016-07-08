@@ -54,4 +54,9 @@ public class Constant {
      * 一次in条件元素的最高值，如果高于此值，则做分组多次查询
      */
     public static final int MAX_IN_PARAM_COUNT = 500;
+
+    /**
+     * 默认根节点的父节点值，因为系统的主键只约定为36位，所以该值默认也为36位，避免char做主键会补充空格的情况
+     */
+    public static final String DEFAULT_PARENT_CODE = "000000000000000000000000000000000000";
 }

@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 @Table(name = "operation_log", schema = "jackie0")
 public class OperationLog extends BaseEntity implements BaseOperationLog, Serializable {
 
+    private static final long serialVersionUID = 5624905180094101790L;
     /**
      * 主键
      */

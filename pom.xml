@@ -11,6 +11,7 @@
     <modules>
         <module>common</module>
         <module>platform</module>
+        <module>static-resource</module>
     </modules>
 
     <name>jackie0</name>

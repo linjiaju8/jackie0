@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>common</artifactId>
+    <packaging>jar</packaging>
     <dependencies>
         <!--核心 POM，包含自动配置支持、日志库和对 YAML 配置文件的支持。-->
         <dependency>

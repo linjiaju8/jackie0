@@ -20,7 +20,7 @@ public interface OperationLogService {
      * 创建客户操作日志
      *
      * @param baseOperationLog 客户操作日志实体
-     * @return 创建成功后的客户操作日志，返回了主键
+     * @return 创建成功后的客户操作日志
      */
     BaseOperationLog createOperationLog(BaseOperationLog baseOperationLog);
 
@@ -28,7 +28,7 @@ public interface OperationLogService {
      * 根据ID获取操作日志信息
      *
      * @param operationLogId 操作日志ID
-     * @param clazz          操作日志的类型，觉得是使用mongodb还是关系数据库
+     * @param clazz          操作日志的类型，决定是使用mongodb还是关系数据库
      * @return 操作日志信息
      */
     <T extends BaseOperationLog> BaseOperationLog findOne(String operationLogId, Class<T> clazz);
