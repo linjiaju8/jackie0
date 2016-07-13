@@ -58,7 +58,7 @@ public class ValidatorUtils {
         Set<ConstraintViolation<T>> violations = validator.validate(dataT);
         if (CollectionUtils.isNotEmpty(violations)) {
             ConstraintViolation<T> constraintViolation = violations.iterator().next();
-            // hibernate.validator无法自动获取国际化资源中定义的错误信息，因为国际化资源配置统一由平台配置，而平台并未把hibernate.validator的异常消息资源文件加入springmvc托管，还得手动通过I18nUtils获取
+            // hibernate.validator无法自动获取国际化资源中定义的错误信息，需要额外修改配置，个人觉得通过工具类获取也很方便
             throw new BusinessException("11", I18nUtils.getMessage(constraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
         }
     }
@@ -92,7 +92,7 @@ public class ValidatorUtils {
         Set<ConstraintViolation<T>> constraintViolations = ValidatorUtils.validate(dataT, failFast);
         if (CollectionUtils.isNotEmpty(constraintViolations)) {
             ConstraintViolation<T> dataConstraintViolation = constraintViolations.iterator().next();
-            // hibernate.validator无法自动获取国际化资源中定义的错误信息，因为国际化资源配置统一由平台配置，而平台并未把hibernate.validator的异常消息资源文件加入springmvc托管，还得手动通过I18nUtils获取
+            // hibernate.validator无法自动获取国际化资源中定义的错误信息，需要额外修改配置，个人觉得通过工具类获取也很方便
             validResult.setErrorCode(ResultVO.FAIL);
             validResult.setErrorMsg(I18nUtils.getMessage(dataConstraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
             validResult.setResult(dataConstraintViolation.getPropertyPath());

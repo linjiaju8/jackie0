@@ -128,4 +128,12 @@ public class ResultVO implements Serializable {
         this.errorMsg = errorMsg;
     }
 
+    @Override
+    public String toString() {
+        return "ResultVO{" +
+                "errorCode='" + errorCode + '\'' +
+                ", errorMsg='" + errorMsg + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }

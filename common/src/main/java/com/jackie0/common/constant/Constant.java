@@ -59,4 +59,9 @@ public class Constant {
      * 默认根节点的父节点值，因为系统的主键只约定为36位，所以该值默认也为36位，避免char做主键会补充空格的情况
      */
     public static final String DEFAULT_PARENT_CODE = "000000000000000000000000000000000000";
+
+    /**
+     * common包对应的数据库schema
+     */
+    public static final String COMMON_SCHEMA = "jackie0";
 }

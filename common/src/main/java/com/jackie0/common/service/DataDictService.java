@@ -5,7 +5,6 @@ import com.jackie0.common.entity.DataDict;
 import com.jackie0.common.vo.ResultVO;
 import org.springframework.data.domain.Page;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -19,20 +18,20 @@ import java.util.List;
  */
 public interface DataDictService {
     /**
-     * 创建一个数据字典并返回创建结果
+     * 新增一个数据字典并返回新增结果
      *
-     * @param dataDict 需要创建数据字典实体
-     * @return 创年间结果，是否成功及失败的异常信息
+     * @param dataDict 需要新增数据字典实体
+     * @return 新增结果，是否成功及失败的异常信息
      */
-    ResultVO createDataDict(@NotNull DataDict dataDict);
+    ResultVO createDataDict(DataDict dataDict);
 
     /**
-     * 批量创建一个数据字典并返回创建结果
+     * 批量新增一个数据字典并返回新增结果
      *
-     * @param dataDicts 需要创建数据字典实体列表
-     * @return 创年间结果，是否成功及失败的异常信息
+     * @param dataDicts 需要新增数据字典实体列表
+     * @return 新增结果，是否成功及失败的异常信息
      */
-    ResultVO createDataDicts(@NotNull List<DataDict> dataDicts);
+    ResultVO createDataDicts(List<DataDict> dataDicts);
 
     /**
      * 分页查询数据字典
@@ -48,7 +47,7 @@ public interface DataDictService {
      * @param groupCode 分组编码
      * @return 该分组编码对应的数据字典列表
      */
-    List<DataDict> findDataDictsByGroupCode(@NotNull String groupCode);
+    List<DataDict> findDataDictsByGroupCode(String groupCode);
 
     /**
      * 根据分组编码及数据字典key获取指定的数据字典
@@ -57,5 +56,5 @@ public interface DataDictService {
      * @param dictKey   数据字典key
      * @return 唯一对应的数据字典
      */
-    DataDict findDataDictByGroupCodeAndDictKey(@NotNull String groupCode, @NotNull String dictKey);
+    DataDict findDataDictByGroupCodeAndDictKey(String groupCode, String dictKey);
 }

@@ -1,5 +1,7 @@
 package com.jackie0.common.enumeration;
 
+import com.jackie0.common.utils.I18nUtils;
+
 /**
  * 操作类型枚举
  * ClassName:OperationType <br/>
@@ -10,11 +12,11 @@ package com.jackie0.common.enumeration;
  * @since JDK 1.8
  */
 public enum OperationType {
-    LOGIN("登录", "login"),
-    CREATE("新增", "create"),
-    DELETE("删除", "delete"),
-    UPDATE("更新", "update"),
-    QUERY("查询", "query");
+    LOGIN(I18nUtils.getMessage("jackie0.common.OperationType.login"), "login"),
+    CREATE(I18nUtils.getMessage("jackie0.common.OperationType.create"), "create"),
+    DELETE(I18nUtils.getMessage("jackie0.common.OperationType.delete"), "delete"),
+    UPDATE(I18nUtils.getMessage("jackie0.common.OperationType.update"), "update"),
+    QUERY(I18nUtils.getMessage("jackie0.common.OperationType.query"), "query");
 
     private String name;
     private String value;

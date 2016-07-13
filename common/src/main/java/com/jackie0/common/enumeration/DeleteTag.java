@@ -1,5 +1,7 @@
 package com.jackie0.common.enumeration;
 
+import com.jackie0.common.utils.I18nUtils;
+
 /**
  * 系统删除标识
  * ClassName:DeleteTag <br/>
@@ -10,8 +12,8 @@ package com.jackie0.common.enumeration;
  * @since JDK 1.8
  */
 public enum DeleteTag {
-    IS_DELETED("已删除", "1"),
-    IS_NOT_DELETED("未删除", "0");
+    IS_DELETED(I18nUtils.getMessage("jackie0.common.DeleteTag.alreadyDeleted"), "1"),
+    IS_NOT_DELETED(I18nUtils.getMessage("jackie0.common.DeleteTag.notDelete"), "0");
 
     private String name;
     private String value;

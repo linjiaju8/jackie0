@@ -2,6 +2,7 @@ package com.jackie0.common.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jackie0.common.constant.Constant;
 import com.jackie0.common.utils.CustomDateDeserialize;
 import com.jackie0.common.utils.CustomDateSerializer;
 import org.hibernate.annotations.GenericGenerator;
@@ -20,7 +21,7 @@ import java.sql.Timestamp;
  * @since JDK 1.8
  */
 @Entity
-@Table(name = "operation_log", schema = "jackie0")
+@Table(name = "operation_log", schema = Constant.COMMON_SCHEMA)
 public class OperationLog extends BaseEntity implements BaseOperationLog, Serializable {
 
     private static final long serialVersionUID = 5624905180094101790L;
@@ -104,7 +105,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Id
-    @Column(name = "OPERATION_LOG_ID", unique = true, length = 36, nullable = false)
+    @Column(name = "operation_log_id", unique = true, length = 36, nullable = false)
     @GenericGenerator(name = "idGenerator", strategy = "uuid2")
     @GeneratedValue(generator = "idGenerator")
     public String getOperationLogId() {
@@ -116,7 +117,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OPERATION_USER", length = 36)
+    @Column(name = "operation_user", length = 36)
     public String getOperationUser() {
         return operationUser;
     }
@@ -126,7 +127,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OPERATION_TIME", nullable = false)
+    @Column(name = "operation_time", nullable = false)
     public Timestamp getOperationTime() {
         return operationTime;
     }
@@ -136,7 +137,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OPERATION_TYPE", length = 16, nullable = false)
+    @Column(name = "operation_type", length = 16, nullable = false)
     public String getOperationType() {
         return operationType;
     }
@@ -146,7 +147,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OPERATION_NAME", length = 256, nullable = false)
+    @Column(name = "operation_name", length = 256, nullable = false)
     public String getOperationName() {
         return operationName;
     }
@@ -156,7 +157,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "DESCRIPTION", length = 2048)
+    @Column(name = "description", length = 2048)
     public String getDescription() {
         return description;
     }
@@ -167,7 +168,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
 
     @Lob
     @Basic
-    @Column(name = "OLD_JSON_DATA")
+    @Column(name = "old_json_data")
     public String getOldJsonData() {
         return oldJsonData;
     }
@@ -178,7 +179,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
 
     @Lob
     @Basic
-    @Column(name = "NEW_JSON_DATA")
+    @Column(name = "new_json_data")
     public String getNewJsonData() {
         return newJsonData;
     }
@@ -188,7 +189,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "URL", length = 2048)
+    @Column(name = "url", length = 2048)
     public String getUrl() {
         return url;
     }
@@ -198,7 +199,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OLD_DATA_CLASS", length = 1024)
+    @Column(name = "old_data_class", length = 1024)
     public String getOldDataClass() {
         return oldDataClass;
     }
@@ -208,7 +209,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "OLD_DATA_PARAM_NAME", length = 512)
+    @Column(name = "old_data_param_name", length = 512)
     public String getOldDataParamName() {
         return oldDataParamName;
     }
@@ -218,7 +219,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "NEW_DATA_CLASS", length = 1024)
+    @Column(name = "new_data_class", length = 1024)
     public String getNewDataClass() {
         return newDataClass;
     }
@@ -228,7 +229,7 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     }
 
     @Basic
-    @Column(name = "NEW_DATA_PARAM_NAME", length = 512)
+    @Column(name = "new_data_param_name", length = 512)
     public String getNewDataParamName() {
         return newDataParamName;
     }
