@@ -30,10 +30,10 @@ public class ControllerAdvice {
     public void initBinder(WebDataBinder binder) {
         binder.setAutoGrowCollectionLimit(5000); // SpringMVC默认数组类型参数映射只支持256条，不能满足系统需求
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(I18nUtils.getMessage("ws.date.format"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat(I18nUtils.getMessage("jackie0.common.date.format"));
         dateFormat.setLenient(false);
 
-        SimpleDateFormat datetimeFormat = new SimpleDateFormat(I18nUtils.getMessage("ws.timestamp.format"));
+        SimpleDateFormat datetimeFormat = new SimpleDateFormat(I18nUtils.getMessage("jackie0.common.timestamp.format"));
         datetimeFormat.setLenient(false);
 
         //自动转换日期类型的字段格式
