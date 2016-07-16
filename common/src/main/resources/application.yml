@@ -57,6 +57,9 @@ spring:
     show-sql: true
   messages:
     basename: i18n/messages-common
+  cache:
+    cache-names: dataDictCache
+    type: redis
 ---
 spring:
   profiles: test

@@ -14,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,6 +43,7 @@ public class DataDictServiceImpl implements DataDictService {
 
 
     @Override
+    @CachePut(key = "#dataDict.groupCode#dataDict.dictKey", cacheNames = "dataDictCache", condition = "#result.errorCode eq 'success'")
     public ResultVO createDataDict(DataDict dataDict) {
         ResultVO createResult = validDataDict(dataDict, OperationType.CREATE);
         LOGGER.debug("新增数据字典验证结果-->{}", createResult);
@@ -51,31 +54,6 @@ public class DataDictServiceImpl implements DataDictService {
         DataDict dataDictCreate = dataDictDao.save(dataDict);
         createResult.setResult(dataDictCreate);
         return createResult;
-    }
-
-    private ResultVO validDataDict(DataDict dataDict, OperationType operationType) {
-        ResultVO validResult = new ResultVO(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.common.dataDict.success.tips", operationType.getName()));
-        if (dataDict == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.canNotBeNull"));
-            return validResult;
-        }
-        validResult = ValidatorUtils.validateData(dataDict, true);
-        if (ResultVO.FAIL.equals(validResult.getErrorCode())) {
-            return validResult;
-        }
-        DataDict dataDictTest = findDataDictByGroupCodeAndDictKey(dataDict.getGroupCode(), dataDict.getDictKey());
-        if (operationType == OperationType.CREATE && dataDictTest != null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.alreadyExists", dataDict.getGroupCode(), dataDict.getDictKey()));
-            return validResult;
-        }
-        if (operationType == OperationType.UPDATE && dataDictTest == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.notExists", dataDict.getGroupCode(), dataDict.getDictKey()));
-            return validResult;
-        }
-        return validResult;
     }
 
     @Override
@@ -131,6 +109,31 @@ public class DataDictServiceImpl implements DataDictService {
         dataDictCondition.setGroupCode(groupCode);
         dataDictCondition.setDictKey(dictKey);
         return dataDictDao.findOne(getDataDictWhereClause(dataDictCondition));
+    }
+
+    private ResultVO validDataDict(DataDict dataDict, OperationType operationType) {
+        ResultVO validResult = new ResultVO(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.common.dataDict.success.tips", operationType.getName()));
+        if (dataDict == null) {
+            validResult.setErrorCode(ResultVO.FAIL);
+            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.canNotBeNull"));
+            return validResult;
+        }
+        validResult = ValidatorUtils.validateData(dataDict, true);
+        if (ResultVO.FAIL.equals(validResult.getErrorCode())) {
+            return validResult;
+        }
+        DataDict dataDictTest = findDataDictByGroupCodeAndDictKey(dataDict.getGroupCode(), dataDict.getDictKey());
+        if (operationType == OperationType.CREATE && dataDictTest != null) {
+            validResult.setErrorCode(ResultVO.FAIL);
+            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.alreadyExists", dataDict.getGroupCode(), dataDict.getDictKey()));
+            return validResult;
+        }
+        if (operationType == OperationType.UPDATE && dataDictTest == null) {
+            validResult.setErrorCode(ResultVO.FAIL);
+            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.notExists", dataDict.getGroupCode(), dataDict.getDictKey()));
+            return validResult;
+        }
+        return validResult;
     }
 
     private Specification<DataDict> getDataDictWhereClause(final DataDict dataDict) {

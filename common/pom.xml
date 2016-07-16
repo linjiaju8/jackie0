@@ -30,6 +30,12 @@
             <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
 
+        <!--支持Spring缓存-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
         <!--包含 spring-data-jpa、spring-orm 和 Hibernate 来支持 JPA。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

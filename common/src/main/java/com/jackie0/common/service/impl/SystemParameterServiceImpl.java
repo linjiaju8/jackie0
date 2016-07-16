@@ -102,19 +102,11 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     }
 
     @Override
-    public <T> T findSystemParameterValueByKey(String systemParameterKey, Class<T> clazz) {
-        if (StringUtils.isBlank(systemParameterKey) || clazz == null) {
-            LOGGER.info("根据键值查询系统参数值方法有入参为空，返回null！入参systemParameterKey-->{},clazz-->{}", systemParameterKey, clazz);
-            return null;
-        }
-        SystemParameter systemParameterCondition = new SystemParameter();
-        systemParameterCondition.setParameterKey(systemParameterKey);
-        SystemParameter systemParameter = systemParameterDao.findOne(getSystemParameterWhereClause(systemParameterCondition));
-        T systemParameterValue = null;
-        if (systemParameter == null) {
-            LOGGER.debug("根据键值查询系统参数值为null，键值为{}", systemParameterKey);
-        } else {
-            systemParameterValue = clazz.cast(systemParameter.getParameterValue());
+    public String findSystemParameterValueByKey(String systemParameterKey) {
+        SystemParameter systemParameter = findSystemParameterByKey(systemParameterKey);
+        String systemParameterValue = null;
+        if (systemParameter != null) {
+            systemParameterValue = systemParameter.getParameterValue();
         }
         return systemParameterValue;
     }

@@ -56,9 +56,7 @@ public interface SystemParameterService {
      * 根据系统参数键值查找系统参数值
      *
      * @param systemParameterKey 系统参数键值
-     * @param clazz              系统参数值类型，参考数据字典groupCode:parameterType，基础数据类型请使用包装类
-     * @param <T>                系统参数值类型的泛型
-     * @return 键值对应的系统参数值，并以指定类型返回
+     * @return 键值对应的系统参数值
      */
-    <T> T findSystemParameterValueByKey(String systemParameterKey, Class<T> clazz);
+    String findSystemParameterValueByKey(String systemParameterKey);
 }

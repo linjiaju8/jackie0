@@ -26,14 +26,6 @@ public class SystemParameter extends BaseEntity implements Serializable {
     private String systemParameterId;
 
     /**
-     * 参数值类型，参考数据字典groupCode:parameterType
-     * 系统参数值类型，支持类型有：基础数据类型、String、日期（yyyyMMdd）、日期时间(yyyyMMdd HH:mm:ss)
-     */
-    @NotBlank(message = "{jackie0.common.systemParameter.parameterValueType.NotBlank}")
-    @Length(min = 1, max = 128, message = "{jackie0.common.systemParameter.parameterValueType.length}")
-    private String parameterValueType;
-
-    /**
      * 参数键值，其命名规则：包名+有意义的业务名称
      * 如:com.jackie0.common.bizArchiveBaseDate业务表归档时间
      */
@@ -64,16 +56,6 @@ public class SystemParameter extends BaseEntity implements Serializable {
 
     public void setSystemParameterId(String systemParameterId) {
         this.systemParameterId = systemParameterId;
-    }
-
-    @Basic
-    @Column(name = "parameter_value_type", length = 128, nullable = false)
-    public String getParameterValueType() {
-        return parameterValueType;
-    }
-
-    public void setParameterValueType(String parameterValueType) {
-        this.parameterValueType = parameterValueType;
     }
 
     @Basic
