@@ -1,0 +1,19 @@
+spring:
+ # profiles不同环境配置标识，如开发、测试、生产环境等
+  profiles: development
+  # 应用名称，自定义
+  application:
+    name: platform
+  messages:
+    basename: i18n/messages-platform
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+---
+spring:
+  profiles: test
+db:
+  url: jdbc:mysql://localhost/test
+  username: test
+  password: test

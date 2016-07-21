@@ -59,7 +59,7 @@ public class ValidatorUtils {
         if (CollectionUtils.isNotEmpty(violations)) {
             ConstraintViolation<T> constraintViolation = violations.iterator().next();
             // hibernate.validator无法自动获取国际化资源中定义的错误信息，需要额外修改配置，个人觉得通过工具类获取也很方便
-            throw new BusinessException("11", I18nUtils.getMessage(constraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
+            throw new BusinessException("exception.5", I18nUtils.getMessage(constraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
         }
     }
 

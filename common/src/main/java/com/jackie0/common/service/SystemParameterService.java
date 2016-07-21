@@ -1,7 +1,6 @@
 package com.jackie0.common.service;
 
 import com.jackie0.common.entity.SystemParameter;
-import com.jackie0.common.vo.ResultVO;
 import org.springframework.data.domain.Page;
 
 /**
@@ -18,7 +17,7 @@ public interface SystemParameterService {
      * @param systemParameter 要新增的系统参数实体
      * @return 新增结果
      */
-    ResultVO createSystemParameter(SystemParameter systemParameter);
+    SystemParameter createSystemParameter(SystemParameter systemParameter);
 
     /**
      * 修改系统参数
@@ -26,7 +25,7 @@ public interface SystemParameterService {
      * @param systemParameter 要修改的系统参数实体
      * @return 修改结果
      */
-    ResultVO updateSystemParameter(SystemParameter systemParameter);
+    SystemParameter updateSystemParameter(SystemParameter systemParameter);
 
     /**
      * 根据主键删除系统参数
@@ -34,7 +33,7 @@ public interface SystemParameterService {
      * @param systemParameterId 要删除的系统参数主键
      * @return 删除结果
      */
-    ResultVO deleteSystemParameterById(String systemParameterId);
+    SystemParameter deleteSystemParameterById(String systemParameterId);
 
     /**
      * 根据条件分页查询系统参数

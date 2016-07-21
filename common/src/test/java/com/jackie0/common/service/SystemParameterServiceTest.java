@@ -2,13 +2,12 @@ package com.jackie0.common.service;
 
 import com.jackie0.common.BaseSprintTestCase;
 import com.jackie0.common.dao.SystemParameterDao;
-import com.jackie0.common.entity.DataDict;
 import com.jackie0.common.entity.SystemParameter;
 import com.jackie0.common.enumeration.OperationType;
 import com.jackie0.common.utils.DataUtils;
-import com.jackie0.common.vo.ResultVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,23 +38,13 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
 
     @Test
     public void testCreateSystemParameter() {
-        ResultVO createResult = systemParameterService.createSystemParameter(null);
-        Assert.assertTrue(ResultVO.FAIL.equals(createResult.getErrorCode()));
 
         SystemParameter systemParameter = new SystemParameter();
         systemParameter.setParameterKey("test");
-        createResult = systemParameterService.createSystemParameter(systemParameter);
-        Assert.assertTrue(ResultVO.FAIL.equals(createResult.getErrorCode()));
-
-        systemParameter.setParameterKey(null);
         systemParameter.setParameterValue("test");
-        createResult = systemParameterService.createSystemParameter(systemParameter);
-        Assert.assertTrue(ResultVO.FAIL.equals(createResult.getErrorCode()));
-
-        systemParameter.setParameterKey("test");
         systemParameter.setDescription("单元测试");
-        createResult = systemParameterService.createSystemParameter(systemParameter);
-        Assert.assertTrue(ResultVO.SUCCESS.equals(createResult.getErrorCode()));
+        SystemParameter savedSystemParameter = systemParameterService.createSystemParameter(systemParameter);
+        Assert.assertTrue(savedSystemParameter != null && StringUtils.isNotBlank(savedSystemParameter.getSystemParameterId()));
     }
 
     @Test
@@ -64,11 +53,10 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
         systemParameter.setParameterKey("test");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
-        ResultVO createResult = systemParameterService.createSystemParameter(systemParameter);
-        systemParameter = createResult.getResult(SystemParameter.class);
-        systemParameter.setParameterValue("test2");
-        ResultVO updateResult = systemParameterService.updateSystemParameter(systemParameter);
-        Assert.assertTrue(ResultVO.SUCCESS.equals(updateResult.getErrorCode()) && systemParameter.getParameterValue().equals(updateResult.getResult(SystemParameter.class).getParameterValue()));
+        SystemParameter createResult = systemParameterService.createSystemParameter(systemParameter);
+        createResult.setParameterValue("test2");
+        SystemParameter updateResult = systemParameterService.updateSystemParameter(createResult);
+        Assert.assertTrue(updateResult != null && systemParameter.getParameterValue().equals(updateResult.getParameterValue()));
     }
 
     @Test
@@ -77,10 +65,9 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
         systemParameter.setParameterKey("test");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
-        ResultVO createResult = systemParameterService.createSystemParameter(systemParameter);
-        systemParameter = createResult.getResult(SystemParameter.class);
-        ResultVO deleteResult = systemParameterService.deleteSystemParameterById(systemParameter.getSystemParameterId());
-        Assert.assertTrue(ResultVO.SUCCESS.equals(deleteResult.getErrorCode()));
+        SystemParameter createResult = systemParameterService.createSystemParameter(systemParameter);
+        SystemParameter deleteResult = systemParameterService.deleteSystemParameterById(createResult.getSystemParameterId());
+        Assert.assertTrue(createResult.getSystemParameterId().equals(deleteResult.getSystemParameterId()));
     }
 
     @Test

@@ -2,7 +2,6 @@ package com.jackie0.common.service;
 
 
 import com.jackie0.common.entity.DataDict;
-import com.jackie0.common.vo.ResultVO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -21,17 +20,17 @@ public interface DataDictService {
      * 新增一个数据字典并返回新增结果
      *
      * @param dataDict 需要新增数据字典实体
-     * @return 新增结果，是否成功及失败的异常信息
+     * @return 保存成功后的数据字典实体
      */
-    ResultVO createDataDict(DataDict dataDict);
+    DataDict createDataDict(DataDict dataDict);
 
     /**
      * 批量新增一个数据字典并返回新增结果
      *
      * @param dataDicts 需要新增数据字典实体列表
-     * @return 新增结果，是否成功及失败的异常信息
+     * @return 新增成功后的数据字典实体列表
      */
-    ResultVO createDataDicts(List<DataDict> dataDicts);
+    Iterable<DataDict> createDataDicts(List<DataDict> dataDicts);
 
     /**
      * 分页查询数据字典

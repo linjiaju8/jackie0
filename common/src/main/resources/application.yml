@@ -58,7 +58,7 @@ spring:
   messages:
     basename: i18n/messages-common
   cache:
-    cache-names: dataDictCache
+    cache-names: dataDictCache,systemParameterCache
     type: redis
 ---
 spring:
