@@ -79,10 +79,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!--添加 Log4j2的支持。-->
+        <!--添加 使用 Spring Boot 默认的日志框架 Logback。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
         <!--使用 Spring Boot 默认的 Tomcat 作为应用服务器。-->
