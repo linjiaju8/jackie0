@@ -10,7 +10,6 @@ import com.jackie0.common.utils.DataUtils;
 import com.jackie0.common.utils.ValidatorUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +36,16 @@ import java.util.List;
 @Service("dataDictService")
 public class DataDictServiceImpl implements DataDictService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataDictServiceImpl.class);
+    private static final String RESULT_GROUPCODE_DICTKEY_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #result.groupCode + #result.dictKey";
+    private static final String GROUPCODE_DICTKEY_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #groupCode + #dictKey";
+    private static final String GROUPCODE_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #groupCode";
 
     @Autowired
     private DataDictDao dataDictDao;
 
 
     @Override
-    @CachePut(cacheNames = {"dataDictCache"}, key = "#result.groupCode + #result.dictKey", condition = "#result != null")
+    @CachePut(cacheNames = {"dataDictCache"}, key = RESULT_GROUPCODE_DICTKEY_CACHE_KEY, condition = "#result != null")
     public DataDict createDataDict(DataDict dataDict) {
         validDataDict(dataDict, OperationType.CREATE);
         DataUtils.setBaseEntityField(dataDict, OperationType.CREATE);
@@ -75,7 +77,7 @@ public class DataDictServiceImpl implements DataDictService {
     }
 
     @Override
-    @Cacheable(cacheNames = {"dataDictCache"}, key = "#groupCode")
+    @Cacheable(cacheNames = {"dataDictCache"}, key = GROUPCODE_CACHE_KEY)
     public List<DataDict> findDataDictsByGroupCode(String groupCode) {
         if (StringUtils.isBlank(groupCode)) {
             return Collections.emptyList();
@@ -88,7 +90,7 @@ public class DataDictServiceImpl implements DataDictService {
     }
 
     @Override
-    @Cacheable(cacheNames = {"dataDictCache"}, key = "#groupCode + #dictKey")
+    @Cacheable(cacheNames = {"dataDictCache"}, key = GROUPCODE_DICTKEY_CACHE_KEY)
     public DataDict findDataDictByGroupCodeAndDictKey(String groupCode, String dictKey) {
         if (StringUtils.isBlank(groupCode) || StringUtils.isBlank(dictKey)) {
             return null;

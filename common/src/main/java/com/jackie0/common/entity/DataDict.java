@@ -24,6 +24,11 @@ public class DataDict extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -3848515126141043090L;
 
     /**
+     * 数据字典缓存前缀
+     */
+    public static final String DATA_DICT_CACHE_KEY_PREFIX = Constant.DATA_CACHE_PREFIX + ".DataDict.";
+
+    /**
      * 主键
      */
     private String dataDictId;

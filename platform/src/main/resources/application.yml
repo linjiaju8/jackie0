@@ -6,10 +6,11 @@ spring:
     name: platform
   messages:
     basename: i18n/messages-platform
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+  # 如果使用jsp作为视图时，撤销mvc这部分注释
+  #mvc:
+  #  view:
+  #    prefix: /WEB-INF/views/
+  #    suffix: .jsp
 ---
 spring:
   profiles: test

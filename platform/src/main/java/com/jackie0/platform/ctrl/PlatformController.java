@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class PlatformController {
-    @RequestMapping("/")
+    /*
+    测试jsp作为视图，spring-boot默认不再支持jsp，需要使用jsp参考：welcome.jsp注释部分
+    @RequestMapping("/jsp")
     public String index() {
-        return "index";
-    }
+        return "welcome";
+    }*/
 }

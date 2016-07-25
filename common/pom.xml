@@ -11,6 +11,22 @@
 
     <artifactId>common</artifactId>
     <packaging>jar</packaging>
+
+    <!-- common项目发布到私服配置 -->
+    <distributionManagement>
+        <repository>
+            <id>user-release</id>
+            <name>User Project Release</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>user-snapshots</id>
+            <name>User Project SNAPSHOTS</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <!--核心 POM，包含自动配置支持、日志库和对 YAML 配置文件的支持。-->
         <dependency>

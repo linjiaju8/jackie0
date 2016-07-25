@@ -35,11 +35,14 @@ import java.util.List;
 public class SystemParameterServiceImpl implements SystemParameterService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemParameterServiceImpl.class);
 
+    private static final String RESULT_PARAMETERKEY_CACHE_KEY = "'" + SystemParameter.DATA_SYSTEM_PARAMETER_KEY_PREFIX + "' + #result.parameterKey";
+    private static final String PARAMETERKEY_CACHE_KEY = "'" + SystemParameter.DATA_SYSTEM_PARAMETER_KEY_PREFIX + "' + #systemParameterKey";
+
     @Autowired
     private SystemParameterDao systemParameterDao;
 
     @Override
-    @CachePut(cacheNames = {"systemParameterCache"}, key = "#result.parameterKey", condition = "#result != null")
+    @CachePut(cacheNames = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY, condition = "#result != null")
     public SystemParameter createSystemParameter(SystemParameter systemParameter) {
         validSystemParameter(systemParameter, OperationType.CREATE);
         DataUtils.setBaseEntityField(systemParameter, OperationType.CREATE);
@@ -47,7 +50,7 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     }
 
     @Override
-    @CachePut(cacheNames = {"systemParameterCache"}, key = "#result.parameterKey", condition = "#result != null")
+    @CachePut(cacheNames = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY, condition = "#result != null")
     public SystemParameter updateSystemParameter(SystemParameter systemParameter) {
         validSystemParameter(systemParameter, OperationType.UPDATE);
         DataUtils.setBaseEntityField(systemParameter, OperationType.UPDATE);
@@ -55,7 +58,7 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     }
 
     @Override
-    @CacheEvict(value = {"systemParameterCache"}, key = "#result.parameterKey")
+    @CacheEvict(value = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY)
     public SystemParameter deleteSystemParameterById(String systemParameterId) {
         if (StringUtils.isBlank(systemParameterId)) {
             throw new BusinessException("jackie0.common.parameter.canNotBeNull", OperationType.DELETE, I18nUtils.getMessage("jackie0.common.systemParameter.primaryKey"));
@@ -78,7 +81,7 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     }
 
     @Override
-    @Cacheable(cacheNames = {"systemParameterCache"}, key = "#systemParameterKey")
+    @Cacheable(cacheNames = {"systemParameterCache"}, key = PARAMETERKEY_CACHE_KEY)
     public SystemParameter findSystemParameterByKey(String systemParameterKey) {
         if (StringUtils.isBlank(systemParameterKey)) {
             LOGGER.info("根据键值查询系统参数方法接收参数为空，返回null！");

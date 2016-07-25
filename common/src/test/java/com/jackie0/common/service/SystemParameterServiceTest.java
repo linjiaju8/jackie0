@@ -40,7 +40,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
     public void testCreateSystemParameter() {
 
         SystemParameter systemParameter = new SystemParameter();
-        systemParameter.setParameterKey("test");
+        systemParameter.setParameterKey("testSystemParameter");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
         SystemParameter savedSystemParameter = systemParameterService.createSystemParameter(systemParameter);
@@ -50,7 +50,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
     @Test
     public void testUpdateSystemParameter() {
         SystemParameter systemParameter = new SystemParameter();
-        systemParameter.setParameterKey("test");
+        systemParameter.setParameterKey("testSystemParameter");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
         SystemParameter createResult = systemParameterService.createSystemParameter(systemParameter);
@@ -62,7 +62,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
     @Test
     public void testDeleteSystemParameterById() {
         SystemParameter systemParameter = new SystemParameter();
-        systemParameter.setParameterKey("test");
+        systemParameter.setParameterKey("testSystemParameter");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
         SystemParameter createResult = systemParameterService.createSystemParameter(systemParameter);
@@ -75,7 +75,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
         List<SystemParameter> systemParameters = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
             SystemParameter systemParameter = new SystemParameter();
-            systemParameter.setParameterKey("test" + (i + 1));
+            systemParameter.setParameterKey("testSystemParameter" + (i + 1));
             systemParameter.setParameterValue("test" + (i + 1));
             systemParameter.setDescription("单元测试");
             DataUtils.setBaseEntityField(systemParameter, OperationType.CREATE);
@@ -89,7 +89,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
     @Test
     public void testFindSystemParameterByKey() {
         SystemParameter systemParameter = new SystemParameter();
-        systemParameter.setParameterKey("test");
+        systemParameter.setParameterKey("testSystemParameter");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
         systemParameterService.createSystemParameter(systemParameter);
@@ -100,7 +100,7 @@ public class SystemParameterServiceTest extends BaseSprintTestCase {
     @Test
     public void testFindSystemParameterValueByKey() {
         SystemParameter systemParameter = new SystemParameter();
-        systemParameter.setParameterKey("test");
+        systemParameter.setParameterKey("testSystemParameter");
         systemParameter.setParameterValue("test");
         systemParameter.setDescription("单元测试");
         systemParameterService.createSystemParameter(systemParameter);

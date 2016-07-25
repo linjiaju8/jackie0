@@ -90,7 +90,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
     public void testFindDataDictsByGroupCode() {
         List<DataDict> dataDicts = buildDataDcitsData();
         dataDictService.createDataDicts(dataDicts);
-        List<DataDict> dataDictRsults = dataDictService.findDataDictsByGroupCode("test");
+        List<DataDict> dataDictRsults = dataDictService.findDataDictsByGroupCode("testDataDcit");
         Assert.assertNotNull(dataDictRsults);
     }
 
@@ -98,7 +98,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
     public void testFindDataDictByGroupCodeAndDictKey() {
         List<DataDict> dataDicts = buildDataDcitsData();
         dataDictService.createDataDicts(dataDicts);
-        DataDict dataDict = dataDictService.findDataDictByGroupCodeAndDictKey("test", "dictKey1");
+        DataDict dataDict = dataDictService.findDataDictByGroupCodeAndDictKey("testDataDcit", "dictKey1");
         Assert.assertNotNull(dataDict);
     }
 
@@ -123,7 +123,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
             dataDict.setDictKey("dictKey" + i);
             dataDict.setDictValue("dictValue" + i);
             dataDict.setDescription("单元测试数据字典");
-            dataDict.setGroupCode("test");
+            dataDict.setGroupCode("testDataDcit");
             dataDict.setParentGroupCode(Constant.DEFAULT_PARENT_CODE);
             dataDicts.add(dataDict);
         }

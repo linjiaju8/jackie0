@@ -64,4 +64,14 @@ public class Constant {
      * common包对应的数据库schema
      */
     public static final String COMMON_SCHEMA = "jackie0";
+
+    /**
+     * session类缓存key的前缀部分，cache的统一命名规范{@link #SESSION_CACHE_PREFIX}或{@link #DATA_CACHE_PREFIX}+业务编码+自己的缓存的业务key
+     */
+    public static final String SESSION_CACHE_PREFIX = "session.cache";
+
+    /**
+     * 数据类缓存key的前缀部分，cache的统一命名规范{@link #SESSION_CACHE_PREFIX}或{@link #DATA_CACHE_PREFIX}+业务编码+自己的缓存的业务key
+     */
+    public static final String DATA_CACHE_PREFIX = "data.cache";
 }
