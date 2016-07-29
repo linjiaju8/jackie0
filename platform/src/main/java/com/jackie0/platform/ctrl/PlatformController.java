@@ -2,6 +2,7 @@ package com.jackie0.platform.ctrl;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 平台基础控制器类
@@ -10,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since Java8
  * date 2016-07-20 15:25
  */
-@Controller
+@RestController
 public class PlatformController {
-    /*
-    测试jsp作为视图，spring-boot默认不再支持jsp，需要使用jsp参考：welcome.jsp注释部分
-    @RequestMapping("/jsp")
+    @RequestMapping("/test")
     public String index() {
-        return "welcome";
-    }*/
+        return "test";
+    }
 }
