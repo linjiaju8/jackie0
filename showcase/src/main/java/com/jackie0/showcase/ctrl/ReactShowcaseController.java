@@ -1,6 +1,9 @@
 package com.jackie0.showcase.ctrl;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -17,17 +20,31 @@ import java.util.Map;
  */
 @RestController
 public class ReactShowcaseController {
-    @RequestMapping("/react/comment")
-    public List<Map<String, String>> reactComment() {
-        List<Map<String, String>> commentList = new ArrayList<>();
-        Map<String, String> comment1 = new HashMap<>();
-        comment1.put("author", "jackie0");
-        comment1.put("text", "这是第一个组件。");
-        Map<String, String> comment2 = new HashMap<>();
-        comment2.put("author", "jackie1");
-        comment2.put("text", "这是另一个组件。");
-        commentList.add(comment1);
-        commentList.add(comment2);
-        return commentList;
+    private static final List<Map<String, String>> COMMENT_LIST = new ArrayList<>();
+
+    @RequestMapping(value = "/react/comment", method = RequestMethod.GET)
+    public List<Map<String, String>> findReactComment() {
+        if (CollectionUtils.isEmpty(COMMENT_LIST)) {
+            Map<String, String> comment1 = new HashMap<>();
+            comment1.put("author", "jackie0");
+            comment1.put("text", "默认评论1。");
+            Map<String, String> comment2 = new HashMap<>();
+            comment2.put("author", "jackie1");
+            comment2.put("text", "默认评论2。");
+            COMMENT_LIST.add(comment1);
+            COMMENT_LIST.add(comment2);
+        }
+        return COMMENT_LIST;
+    }
+
+    @RequestMapping(value = "/react/comment", method = RequestMethod.POST)
+    public List<Map<String, String>> createReactComment(String author, String text) {
+        if (StringUtils.isNotBlank(author) && StringUtils.isNotBlank(text)) {
+            Map<String, String> comment = new HashMap<>();
+            comment.put("author", author);
+            comment.put("text", text);
+            COMMENT_LIST.add(comment);
+        }
+        return COMMENT_LIST;
     }
 }

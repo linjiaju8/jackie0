@@ -5,7 +5,7 @@ spring:
   application:
     name: platform
   messages:
-    basename: i18n/messages-platform
+    basename: i18n/messages-common
   # 如果使用jsp作为视图时，撤销mvc这部分注释
   mvc:
     view:
