@@ -2,16 +2,15 @@
  * Created by jackie0 on 2016/8/3.
  */
 var webpack = require('webpack');
-var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.bundle.js');
+var commonsPlugin = new webpack.optimize.CommonsChunkPlugin({name: 'common', minChunks: 2});
 var path = require("path");
 module.exports = {
     //插件项
     plugins: [commonsPlugin],
     //页面入口文件配置
     entry: {
-        index: '../webapp/resources/js/src/index.js'/*,
-         comment: './js/src/react-comment.js',
-         helloworld: './js/src/react-helloworld.js'*/
+        index: '../webapp/resources/js/src/index.js',
+        login: '../webapp/resources/js/src/login.js'
     },
     //入口文件输出配置
     output: {

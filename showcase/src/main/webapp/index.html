@@ -9,84 +9,204 @@
     <script src="http://localhost:8080/resources/lib/react/react-dom.js"></script>
     <script src="http://localhost:8080/resources/lib/antd/antd.js"></script>-->
     <style type="text/css">
-        .ant-layout-topaside {
-            height: 100%;
+        .ant-layout-aside {
+            position: relative;
+            min-height: 100%;
         }
 
-        .ant-layout-topaside .ant-layout-wrapper {
-            padding: 0 50px;
-        }
-
-        .ant-layout-topaside .ant-layout-header {
-            background: #404040;
-            height: 64px;
-        }
-
-        .ant-layout-topaside .ant-layout-logo {
-            width: 120px;
-            height: 32px;
-            background: #333;
+        .ant-layout-aside .ant-layout-logo {
+            text-align: center;
             border-radius: 6px;
-            margin: 16px 28px 16px 0;
-            float: left;
+            margin: 16px auto 16px auto;
+            transition: all 0.3s ease;
         }
 
-        .ant-layout-topaside .ant-layout-subheader {
-            height: 48px;
-            border-bottom: 1px solid #e9e9e9;
+        .ant-layout-aside-collapse .ant-layout-logo {
+            text-align: center;
+            margin: 16px auto 16px auto;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside .ant-layout-sider {
+            width: 224px;
+            background: #404040;
+            position: absolute;
+            overflow: visible;
+            padding-bottom: 24px;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider {
+            width: 64px;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside .ant-layout-sider > .ant-menu {
+            margin-bottom: 20px;
+        }
+
+        .ant-layout-aside .ant-layout-sider > .ant-menu > .ant-menu-item {
+            margin: 16px 0;
+        }
+
+        .ant-layout-aside .ant-layout-sider > .ant-menu > .ant-menu-item .nav-text {
+            vertical-align: baseline;
+            display: inline-block;
+        }
+
+        .ant-layout-aside .ant-layout-sider > .ant-menu > .ant-menu-item > .anticon {
+            transition: font-size .3s;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider > .ant-menu > .ant-menu-item {
+            transition: all 0s ease;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider > .ant-menu > .ant-menu-item > .anticon {
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider > .ant-menu > .ant-menu-item .nav-text {
+            display: none;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider > .ant-menu > .ant-menu-item:hover {
+            background: #2db7f5;
+            color: #fff;
+            transition: all 0s ease;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-sider > .ant-menu > .ant-menu-item:hover .nav-text {
+            display: inline-block;
+            vertical-align: top;
+            background: #2db7f5;
+            color: #fff;
+            padding-right: 16px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        /* 实际使用中需要改成 position: fixed */
+        .ant-layout-aside .ant-aside-action {
+            height: 42px;
+            width: 224px;
+            position: fixed;
+            bottom: 0;
+            background: #656565;
+            color: #fff;
+            text-align: center;
+            line-height: 42px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside-collapse .ant-aside-action {
+            width: 64px;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside .ant-layout-header {
             background: #fff;
+            height: 80px;
+            border-bottom: 1px solid #e9e9e9;
         }
 
-        .ant-layout-topaside .ant-layout-breadcrumb {
+        .ant-layout-aside .ant-layout-breadcrumb {
             margin: 7px 0 -17px 24px;
         }
 
-        .ant-layout-topaside .ant-layout-container {
+        .ant-layout-aside .ant-layout-main {
+            margin-left: 224px;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside-collapse .ant-layout-main {
+            margin-left: 64px;
+            transition: all 0.3s ease;
+        }
+
+        .ant-layout-aside .ant-layout-container {
+            margin: 24px 16px;
+        }
+
+        .ant-layout-aside .ant-layout-content {
             background: #fff;
-            margin: 24px 0 0;
-            position: relative;
-            padding: 24px 0;
-            overflow: hidden;
+            padding: 24px;
         }
 
-        .ant-layout-topaside .ant-layout-sider {
-            width: 224px;
-            float: left;
-        }
-
-        .ant-layout-topaside .ant-layout-content {
-            border-left: 1px solid #e9e9e9;
-            padding: 0 24px;
-            overflow: auto;
-            position: relative;
-            left: -1px;
-        }
-
-        .ant-layout-topaside .ant-layout-footer {
-            height: 64px;
-            line-height: 64px;
+        .ant-layout-aside .ant-layout-footer {
+            height: 80px;
+            line-height: 80px;
             text-align: center;
             font-size: 12px;
             color: #999;
+            background: #fff;
+            border-top: 1px solid #e9e9e9;
+            width: 100%;
+        }
+
+        /*.ant-badge {
+            margin-right: 16px;
+        }*/
+
+        .index-head-portrait {
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        #app-logo {
+            float: left
+        }
+
+        #app-logo, #app-logo img {
+            height: 80px;
+            line-height: 80px
+        }
+
+        #app-logo img {
+            width: 40px;
+            margin-right: 8px
+        }
+
+        #app-logo span {
+            float: right;
+            font-size: 16px;
+            font-family: Raleway, Hiragino Sans GB, sans-serif;
+            height: 80px;
+            line-height: 80px;
+            text-transform: uppercase
+        }
+
+        .index-split-line {
+            border-left: 1px solid #ebedee;
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 30px;
+            margin: 20px auto 0
+        }
+
+        .index-search-box{
+            float: left;
+            width: 200px;
+            margin-top: 20px;
+        }
+
+        .index-top-info{
+            float: right;
+            width: 200px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<div id="indexContainer">
+<div id="indexContainer" style="height: 100%;">
 
 </div>
-<!--<div>
-    <h3>showcase列表</h3>
-    <ul>
-        <li>
-            <a href="react-showcase/react-helloworld.html" target="_blank">1、react的Hello World!</a>
-        </li>
-        <li>
-            <a href="react-showcase/react-comment.html" target="_blank">2、react的Comment演示</a>
-        </li>
-    </ul>
-</div>-->
-<script src="http://localhost:8080/showcase/resources/js/build/common.bundle.js"></script>
-<script src="http://localhost:8080/showcase/resources/js/build/index.bundle.js"></script>
+<script src="./resources/js/build/common.bundle.js"></script>
+<script src="./resources/js/build/index.bundle.js"></script>
 </body>
 </html>
