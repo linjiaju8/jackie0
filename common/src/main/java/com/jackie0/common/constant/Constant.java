@@ -15,6 +15,11 @@ import java.util.Locale;
  * @since JDK 1.8
  */
 public class Constant {
+    private Constant() {
+        // fix Utility classes should not have public constructors
+    }
+
+
     /**
      * 项目默认编码
      */
@@ -38,7 +43,7 @@ public class Constant {
     /**
      * 系统数据库归档时间字段默认归档时间
      */
-    public static final Timestamp DEF_ARCHIVE_BASE_DATE = new Timestamp(new GregorianCalendar(2099, 1, 1).getTime().getTime());
+    public static final String DEF_ARCHIVE_BASE_DATE_STR = "2099-01-01";
 
     /**
      * web自助密码验证的最低安全级别

@@ -5,6 +5,8 @@ import com.jackie0.common.entity.BaseEntity;
 import com.jackie0.common.enumeration.DeleteTag;
 import com.jackie0.common.enumeration.OperationType;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
@@ -18,6 +20,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.sql.Clob;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -70,7 +73,7 @@ public class DataUtils {
                 }
             }
         }
-        return StringUtils.isBlank(stringBuilder) ? null : stringBuilder.toString();
+        return Objects.toString(stringBuilder, null);
     }
 
     /**
@@ -126,7 +129,7 @@ public class DataUtils {
         if (OperationType.CREATE == operationType) {
             baseEntity.setCreatedBy(curUserId);
             baseEntity.setCreationDate(curTimestamp);
-            baseEntity.setArchiveBaseDate(Constant.DEF_ARCHIVE_BASE_DATE);
+            baseEntity.setArchiveBaseDate(new Timestamp(new DateTime(Constant.DEF_ARCHIVE_BASE_DATE_STR).getMillis()));
             baseEntity.setBizOrgCode("");
             baseEntity.setRecordVersion(new BigDecimal(1));
             baseEntity.setDeletedFlag(DeleteTag.IS_NOT_DELETED.getValue());

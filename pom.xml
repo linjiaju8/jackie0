@@ -40,6 +40,7 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <druid.version>1.0.20</druid.version>
         <mysql.version>5.1.18</mysql.version>
+        <joda-time.version>2.9.4</joda-time.version>
     </properties>
 
     <!-- dependencyManagement通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
@@ -125,6 +126,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+
+            <!-- joda日期时间工具类 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
