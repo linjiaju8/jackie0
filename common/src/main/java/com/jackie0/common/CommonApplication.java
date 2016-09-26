@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
         "org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration"})
 @EnableCaching
 public class CommonApplication {
+    private CommonApplication() {
+    }
+
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication(CommonApplication.class);
         springApplication.setWebEnvironment(false);

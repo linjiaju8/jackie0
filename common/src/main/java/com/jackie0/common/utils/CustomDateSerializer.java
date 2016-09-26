@@ -59,7 +59,7 @@ public class CustomDateSerializer extends JsonSerializer<Date> {
                     }
                 } catch (Exception e) {
                     formattedDate = value.toString();
-                    LOGGER.debug("日期{}按照格式{}转换日期异常-->{},跳到下一个格式！", value, dateFormat, e.getMessage());
+                    LOGGER.debug("日期{}按照格式{}转换日期异常-->{},跳到下一个格式！", value, dateFormat, e);
                     if (index == dateFormats.length - 1) {
                         LOGGER.info("所有格式【{}】都无法转换当前日期{}默认返回日期的toString()结果！", ArrayUtils.toString(dateFormats), value);
                     }

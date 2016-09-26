@@ -3,10 +3,13 @@ package com.jackie0.common.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * spring上下文注册类，方便在非spring容器管理的类中调用spring容器相关方法
@@ -17,28 +20,20 @@ import org.springframework.stereotype.Component;
  * @since JDK 1.8
  */
 @Component
-@Lazy(false)
-public class ApplicationContextRegister implements ApplicationContextAware {
+public class ApplicationContextUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextRegister.class);
+    private static ApplicationContextUtils instance;
 
-    private static ApplicationContext APPLICATION_CONTEXT;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-    /**
-     * 设置spring上下文
-     *
-     * @param applicationContext spring上下文
-     * @throws BeansException
-     */
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext)
-            throws BeansException {
-        LOGGER.debug("ApplicationContext registed-->{}", applicationContext);
-        APPLICATION_CONTEXT = applicationContext;
+    @PostConstruct
+    public void registerInstance() {
+        instance = this;
     }
 
     public static ApplicationContext getApplicationContext() {
-        return APPLICATION_CONTEXT;
+        return instance.applicationContext;
     }
 }
 

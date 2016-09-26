@@ -27,7 +27,7 @@ public final class CSRFTokenManager {
     /**
      * The location on the session which stores the token
      */
-    public final static String CSRF_TOKEN_FOR_SESSION_ATTR_NAME = CSRFTokenManager.class.getName() + ".tokenval";
+    public static final String CSRF_TOKEN_FOR_SESSION_ATTR_NAME = CSRFTokenManager.class.getName() + ".tokenval";
 
     /**
      * 加密方式
@@ -40,6 +40,9 @@ public final class CSRFTokenManager {
      */
     @Value("${shiro.password.hashIterations}")
     private static int hashIterations = 2;
+
+    private CSRFTokenManager() {
+    }
 
     /**
      * 获取session(Shiro的Session而非HttpSession)的Token值，支持每个页面存的Token值不同

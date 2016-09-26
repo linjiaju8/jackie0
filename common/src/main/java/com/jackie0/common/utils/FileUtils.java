@@ -22,7 +22,9 @@ public class FileUtils {
 
     public static void newIODownload(ServletOutputStream servletOutputStream, String filePathAndFileName) throws IOException {
         long startTime = System.currentTimeMillis();
-        try (FileChannel fileChannelIn = new RandomAccessFile(filePathAndFileName, "r").getChannel()) {
+        try (// java 7 语法糖 try-with-resources sonar 推荐使用
+             RandomAccessFile randomAccessFile = new RandomAccessFile(filePathAndFileName, "r");
+             FileChannel fileChannelIn = randomAccessFile.getChannel()) {
             ByteBuffer byteBuffer = ByteBuffer.allocate(BUFFER_SIZE); // 从日志文件每次写入的缓存
             while (fileChannelIn.read(byteBuffer) != -1) {
                 byteBuffer.flip();

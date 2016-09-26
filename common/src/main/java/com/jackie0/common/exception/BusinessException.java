@@ -14,31 +14,15 @@ public class BusinessException extends RuntimeException {
 
     private static final long serialVersionUID = -2320685094638126902L;
 
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
     /**
      * 错误编码
      */
-    private String errorCode;
+    private final String errorCode;
 
     /**
      * 错误信息
      */
-    private String errorMsg;
+    private final String errorMsg;
 
     /**
      * 根据errorCode构造异常信息
@@ -63,5 +47,14 @@ public class BusinessException extends RuntimeException {
         super(I18nUtils.getMessage("tipsCode", errorCode) + I18nUtils.getMessage("tipsMsg") + I18nUtils.getMessage(errorCode, args), cause);
         this.errorCode = errorCode;
         errorMsg = I18nUtils.getMessage(errorCode, args);
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+
+    public String getErrorMsg() {
+        return errorMsg;
     }
 }

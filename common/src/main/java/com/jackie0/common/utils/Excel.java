@@ -40,6 +40,9 @@ public class Excel {
     // 默认的excel单元格列宽，单位1/256个字符，这个值是根据现有的KOS系统得来的，需求要求与老系统一样
     private static final int DEF_CELL_WIDTH = 2304;
 
+    private Excel() {
+    }
+
     public static ColumnStyle getDefColumnStyle() {
         initColumnStyle(DEF_COLUMN_STYLE);
         return DEF_COLUMN_STYLE;
@@ -171,6 +174,11 @@ public class Excel {
 
         private String columnField; // 改列对应的列属性名称
         private int columnWidth; // 列宽
+
+        public ColumnStyle() {
+            // 默认初始化样式
+            initColumnStyle(this);
+        }
 
         public short getAlignment() {
             return alignment;
@@ -368,11 +376,6 @@ public class Excel {
             this.columnWidth = columnWidth;
         }
 
-
-        public ColumnStyle() {
-            // 默认初始化样式
-            initColumnStyle(this);
-        }
     }
 
     public static class TitleStyle extends ColumnStyle {

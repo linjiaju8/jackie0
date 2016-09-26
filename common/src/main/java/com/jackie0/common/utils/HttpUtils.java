@@ -67,8 +67,6 @@ public class HttpUtils {
         // The URL-encoded contend
         // 正文，正文内容其实跟get的URL中 '? '后的参数字符串一致
         String content = getContentByParam(param);
-        /*"userID=" + URLEncoder.encode("一个大肥人", "UTF-8");
-        content += "&pswd=" + URLEncoder.encode("两个个大肥人", "UTF-8");*/
         // DataOutputStream.writeBytes将字符串中的16位的unicode字符以8位的字符形式写到流里面
         if (StringUtils.isNotBlank(content)) {
             out.writeBytes(content);

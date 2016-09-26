@@ -9,8 +9,6 @@ import com.jackie0.common.mongo.entity.MongoOperationLog;
 import com.jackie0.common.service.OperationLogService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,7 +32,6 @@ import java.util.UUID;
  */
 @Service("operationLogServiceImpl")
 public class OperationLogServiceImpl implements OperationLogService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(OperationLogServiceImpl.class);
 
     @Autowired
     private OperationLogMongoDao operationLogMongoDao;

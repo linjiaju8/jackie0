@@ -32,4 +32,7 @@ public class CommonExceptionCodeConstant {
      * 未知异常
      */
     public static final String ERROR_UNKNOW = "exception.4";
+
+    private CommonExceptionCodeConstant() {
+    }
 }

@@ -32,6 +32,9 @@ import java.util.regex.Pattern;
 public class ValidatorUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidatorUtils.class);
 
+    private ValidatorUtils() {
+    }
+
     /**
      * 获取验证对象
      *
@@ -54,7 +57,7 @@ public class ValidatorUtils {
      * @param dataT 要验证的数据
      * @param <T>   要验证数据的泛型类型
      */
-    public static <T> void validate(T dataT) throws BusinessException {
+    public static <T> void validate(T dataT) {
         Validator validator = ValidatorUtils.getHibernateValidator(true);
         Set<ConstraintViolation<T>> violations = validator.validate(dataT);
         if (CollectionUtils.isNotEmpty(violations)) {

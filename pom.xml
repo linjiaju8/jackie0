@@ -41,6 +41,7 @@
         <druid.version>1.0.20</druid.version>
         <mysql.version>5.1.18</mysql.version>
         <joda-time.version>2.9.4</joda-time.version>
+        <sonar.version>2.7.1</sonar.version>
     </properties>
 
     <!-- dependencyManagement通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
@@ -139,6 +140,16 @@
 
     <build>
         <finalName>jackie0</finalName>
+        <!-- To define the plugin version in your parent POM -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

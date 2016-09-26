@@ -20,6 +20,9 @@ import java.util.GregorianCalendar;
 public class CalendarUtils {
     private static final String DEF_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    private CalendarUtils() {
+    }
+
     /**
      * 获取相对于当前周偏移量的指定星期当天日期
      * 如果想按照国人习惯返回星期天且作为一周的结束可以将amount+1来获取

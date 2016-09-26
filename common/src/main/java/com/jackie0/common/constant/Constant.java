@@ -1,8 +1,6 @@
 package com.jackie0.common.constant;
 
 
-import java.sql.Timestamp;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -15,10 +13,6 @@ import java.util.Locale;
  * @since JDK 1.8
  */
 public class Constant {
-    private Constant() {
-        // fix Utility classes should not have public constructors
-    }
-
 
     /**
      * 项目默认编码
@@ -79,4 +73,8 @@ public class Constant {
      * 数据类缓存key的前缀部分，cache的统一命名规范{@link #SESSION_CACHE_PREFIX}或{@link #DATA_CACHE_PREFIX}+业务编码+自己的缓存的业务key
      */
     public static final String DATA_CACHE_PREFIX = "data.cache";
+
+    private Constant() {
+        // fix Utility classes should not have public constructors
+    }
 }

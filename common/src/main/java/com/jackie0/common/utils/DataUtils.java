@@ -6,13 +6,11 @@ import com.jackie0.common.enumeration.DeleteTag;
 import com.jackie0.common.enumeration.OperationType;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -54,10 +52,8 @@ public class DataUtils {
      * @return 转换后的Clob值
      */
     public static String clob2String(Clob clobData) {
-        Reader reader = null;
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            reader = clobData.getCharacterStream();
+        try (Reader reader = clobData.getCharacterStream()) {
             char[] buf = new char[1024];
             int len;
             while ((len = reader.read(buf)) != -1) {
@@ -65,13 +61,7 @@ public class DataUtils {
             }
         } catch (Exception e) {
             stringBuilder = null;
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException ignored) {
-                }
-            }
+            LOGGER.info("DataUtils.clob2String(Clob clobData)异常-->{}", e);
         }
         return Objects.toString(stringBuilder, null);
     }
@@ -89,13 +79,13 @@ public class DataUtils {
             try {
                 encodeFileName = URLEncoder.encode(fileName, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                LOGGER.error("编码文件名异常！{}", e.getMessage());
+                LOGGER.error("DataUtils.encodeFileName(String fileName, HttpServletRequest httpServletRequest)编码文件名异常！{}", e);
             }
         } else {
             try {
                 encodeFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
             } catch (UnsupportedEncodingException e) {
-                LOGGER.error("编码文件名异常！{}", e.getMessage());
+                LOGGER.error("DataUtils.encodeFileName(String fileName, HttpServletRequest httpServletRequest)编码文件名异常！{}", e);
             }
         }
         return encodeFileName;
