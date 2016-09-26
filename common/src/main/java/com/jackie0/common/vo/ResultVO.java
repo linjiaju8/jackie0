@@ -9,12 +9,12 @@ import java.io.Serializable;
  * @since Java8
  * date 2016-06-15 16:17
  */
-public class ResultVO implements Serializable {
+public class ResultVO<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 602682550615581963L;
 
-    public final static String SUCCESS = "success";
+    public static final String SUCCESS = "success";
 
-    public final static String FAIL = "fail";
+    public static final String FAIL = "fail";
 
     /**
      * 错误编码
@@ -29,11 +29,11 @@ public class ResultVO implements Serializable {
     /**
      * 返回结果
      */
-    private Object result;
+    private T result;
 
 
     public ResultVO() {
-
+        // 无参构造参数
     }
 
     /**
@@ -57,7 +57,7 @@ public class ResultVO implements Serializable {
      * @param result    初始化结果对象
      */
 
-    public ResultVO(String errorCode, String errorMsg, Object result) {
+    public ResultVO(String errorCode, String errorMsg, T result) {
         super();
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
@@ -69,18 +69,8 @@ public class ResultVO implements Serializable {
      *
      * @return result
      */
-    public Object getResult() {
+    public T getResult() {
         return result;
-    }
-
-    /**
-     * 返回 result 的值
-     *
-     * @param clazz result的Class类型
-     * @return result
-     */
-    public <T> T getResult(Class<T> clazz) {
-        return clazz.cast(result);
     }
 
     /**
@@ -88,7 +78,7 @@ public class ResultVO implements Serializable {
      *
      * @param result 结果对象
      */
-    public void setResult(Object result) {
+    public void setResult(T result) {
         this.result = result;
     }
 

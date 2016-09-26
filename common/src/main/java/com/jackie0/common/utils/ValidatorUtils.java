@@ -16,6 +16,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,7 +88,7 @@ public class ValidatorUtils {
      * @return 验证结果
      */
     public static <T> ResultVO validateData(T dataT, boolean failFast) {
-        ResultVO validResult = new ResultVO();
+        ResultVO<String> validResult = new ResultVO<>();
         // 通过org.hibernate.validator验证实体参考对应实体注解验证规则
         Set<ConstraintViolation<T>> constraintViolations = ValidatorUtils.validate(dataT, failFast);
         if (CollectionUtils.isNotEmpty(constraintViolations)) {
@@ -95,7 +96,7 @@ public class ValidatorUtils {
             // hibernate.validator无法自动获取国际化资源中定义的错误信息，需要额外修改配置，个人觉得通过工具类获取也很方便
             validResult.setErrorCode(ResultVO.FAIL);
             validResult.setErrorMsg(I18nUtils.getMessage(dataConstraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
-            validResult.setResult(dataConstraintViolation.getPropertyPath());
+            validResult.setResult(Objects.toString(dataConstraintViolation.getPropertyPath(), ""));
             return validResult;
         } else {
             validResult.setErrorCode(ResultVO.SUCCESS);
