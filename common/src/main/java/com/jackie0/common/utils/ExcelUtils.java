@@ -91,9 +91,11 @@ public class ExcelUtils {
      */
     private static Workbook createWorkbook(ExcelType exportAs) {
         // 默认创建xlsx缓存导出的工作薄
-        Workbook workbook = new SXSSFWorkbook(200);
+        Workbook workbook;
         if (exportAs.getValue() == ExcelType.XLS.getValue()) {
             workbook = new HSSFWorkbook();
+        } else {
+            workbook = new SXSSFWorkbook(200);
         }
         return workbook;
     }
@@ -242,6 +244,7 @@ public class ExcelUtils {
                     out.flush();
                     out.close();
                 }
+                workbook.close();
             } catch (IOException ce) {
                 LOGGER.error("writeWorkbook finally exception ", ce);
             }
