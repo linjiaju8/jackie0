@@ -1,11 +1,13 @@
 package com.jackie0.common.filter;
 
+import com.jackie0.common.constant.Constant;
 import com.jackie0.common.utils.CSRFTokenManager;
 import com.jackie0.common.utils.I18nUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +53,7 @@ public class SecurityFilter implements Filter {
         while (paramEnum != null && pass && paramEnum.hasMoreElements()) {
             String paramName = paramEnum.nextElement();
             String paramValue = httpServletRequest.getParameter(paramName);
-            pass = paramValue.equals(new HTMLFilter().filter(paramValue));
+            pass = paramValue.equals(HtmlUtils.htmlEscape(paramValue, Constant.DEF_ENC));
         }
         return pass;
     }
