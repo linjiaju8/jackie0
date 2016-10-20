@@ -1,28 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu,Breadcrumb,Icon,Affix,Badge,Row,Col,Input,Button } from 'antd';
+import { Router, Route, Link, RouteHandler } from 'react-router';
+import Welcome from 'welcome';
+import About from 'about';
+
 const SubMenu = Menu.SubMenu;
 
 class AsideCollapseMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {current: 'home'};
+        this.state = {collapse: false};
     }
 
     getInitialState() {
         return {
-            collapse: true
+            collapse: false
         };
     }
 
     onCollapseChange() {
         this.setState({
-            collapse: !this.state.collapse,
+            collapse: !this.state.collapse
         })
     }
 
     render() {
-        const collapse = this.state.collapse;
+        let collapse = this.state.collapse;
         return (
             <div className={collapse ? "ant-layout-aside ant-layout-aside-collapse" : "ant-layout-aside"}>
                 <aside className="ant-layout-sider">
@@ -36,10 +40,10 @@ class AsideCollapseMenu extends React.Component {
                     </div>
                     <Menu mode="inline" theme="dark" defaultSelectedKeys={['user']}>
                         <Menu.Item key="user">
-                            <Icon type="user"/><span className="nav-text">导航一</span>
+                            <Link to="welcome"><Icon type="user"/><span className="nav-text">欢迎</span></Link>
                         </Menu.Item>
                         <Menu.Item key="setting">
-                            <Icon type="setting"/><span className="nav-text">导航二</span>
+                            <Link to="about"><Icon type="setting"/><span className="nav-text">关于</span></Link>
                         </Menu.Item>
                         <Menu.Item key="laptop">
                             <Icon type="laptop"/><span className="nav-text">导航三</span>
@@ -90,7 +94,7 @@ class AsideCollapseMenu extends React.Component {
                     <div className="ant-layout-container">
                         <div className="ant-layout-content">
                             <div style={{ height: 600 }}>
-                                内容区域
+                                {this.props.children}
                             </div>
                         </div>
                     </div>
@@ -103,17 +107,18 @@ class AsideCollapseMenu extends React.Component {
     }
 }
 
-class IndexContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+const routes = (
+    <Router>
+        <Route path="/" component={AsideCollapseMenu}>
+            <Route path="welcome" component={Welcome}/>
+            <Route path="about" component={About}/>
+            /*<Route path="users" component={About}>
+                <Route path="/user/:userId" component={About}/>
+            </Route>
+            <Route path="*" component={About}/>
+            */
+        </Route>
+    </Router>
+);
 
-    render() {
-        return (
-            <AsideCollapseMenu />
-        );
-    }
-}
-
-ReactDOM.render(<IndexContainer />, document.getElementById('indexContainer'));
+ReactDOM.render(routes, document.getElementById('indexContainer'));
