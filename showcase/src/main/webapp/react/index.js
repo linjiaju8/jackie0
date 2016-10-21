@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu,Breadcrumb,Icon,Affix,Badge,Row,Col,Input,Button } from 'antd';
 import { Router, Route, Link, RouteHandler } from 'react-router';
-import Welcome from 'welcome';
-import About from 'about';
+import Welcome from './src/containers/welcome';
+import About from './src/containers/about';
 
 const SubMenu = Menu.SubMenu;
 

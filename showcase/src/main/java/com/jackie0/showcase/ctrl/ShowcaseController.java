@@ -1,7 +1,15 @@
 package com.jackie0.showcase.ctrl;
 
-import org.springframework.stereotype.Controller;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * showcase控制器类
@@ -10,43 +18,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since Java8
  * date 2016-07-29 16:04
  */
-@Controller
+@RestController
 public class ShowcaseController {
-    /**
-     * 测试jsp作为视图，spring-boot默认不再支持jsp，需要使用jsp参考：welcome.jsp注释部分
-     */
-    @RequestMapping("/jsp")
-    public String toJspView() {
-        return "jsp-view.jsp";
+    private static final List<Map<String, String>> COMMENT_LIST = new ArrayList<>();
+
+    @RequestMapping(value = "/react/comment", method = RequestMethod.GET)
+    public List<Map<String, String>> findReactComment() {
+        if (CollectionUtils.isEmpty(COMMENT_LIST)) {
+            Map<String, String> comment1 = new HashMap<>();
+            comment1.put("author", "jackie0");
+            comment1.put("text", "默认评论1。");
+            Map<String, String> comment2 = new HashMap<>();
+            comment2.put("author", "jackie1");
+            comment2.put("text", "默认评论2。");
+            COMMENT_LIST.add(comment1);
+            COMMENT_LIST.add(comment2);
+        }
+        return COMMENT_LIST;
     }
 
-    /**
-     * 测试html视图
-     *
-     * @return
-     */
-    @RequestMapping("/html")
-    public String toHtmlView() {
-        return "html-view.html";
-    }
-
-    /**
-     * 首页
-     *
-     * @return 首页
-     */
-    @RequestMapping("/")
-    public String toIndex() {
-        return "index.html";
-    }
-
-    /**
-     * 登录页
-     *
-     * @return 登录视图
-     */
-    @RequestMapping("/login")
-    public String toLogin() {
-        return "login.html";
+    @RequestMapping(value = "/react/comment", method = RequestMethod.POST)
+    public List<Map<String, String>> createReactComment(String author, String text) {
+        if (StringUtils.isNotBlank(author) && StringUtils.isNotBlank(text)) {
+            Map<String, String> comment = new HashMap<>();
+            comment.put("author", author);
+            comment.put("text", text);
+            COMMENT_LIST.add(comment);
+        }
+        return COMMENT_LIST;
     }
 }
