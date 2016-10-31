@@ -5,7 +5,7 @@ spring:
   application:
     name: platform
   messages:
-    basename: i18n/messages-common
+    basename: i18n/messages-common,i18n/messages-showcase
   # 如果要访问WEB-INF下的视图文件开启如下配置
   # 这里不配置suffix方便混合使用不同视图如同时使用jsp、html都可以，在Controller返回视图时带上后缀即可
   # 特别的如果要访问WEB-INF下的html文件，必须配置com.jackie0.common.config.MvcConfiguration，jsp则不用

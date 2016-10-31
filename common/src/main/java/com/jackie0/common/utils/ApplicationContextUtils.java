@@ -2,6 +2,7 @@ package com.jackie0.common.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import javax.annotation.PostConstruct;
  * @since JDK 1.8
  */
 @Component
+@Lazy(false)
 public class ApplicationContextUtils {
 
     private static ApplicationContextUtils instance;
