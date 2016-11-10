@@ -141,4 +141,17 @@ public class DataDict extends BaseEntity implements Serializable {
     public void setDictOrder(Integer dictOrder) {
         this.dictOrder = dictOrder;
     }
+
+    @Override
+    public String toString() {
+        return "DataDict{" +
+                "dataDictId='" + dataDictId + '\'' +
+                ", groupCode='" + groupCode + '\'' +
+                ", parentGroupCode='" + parentGroupCode + '\'' +
+                ", dictKey='" + dictKey + '\'' +
+                ", dictValue='" + dictValue + '\'' +
+                ", description='" + description + '\'' +
+                ", dictOrder=" + dictOrder +
+                '}';
+    }
 }

@@ -82,14 +82,14 @@ public class CommonApplicationTest extends BaseSprintTestCase {
 
     @Test
     public void testI18n() {
-        String i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, "参数1", "参数2");
+        String i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.TEST_ERROR, "参数1", "参数2");
         Assert.assertNotNull(i18nMsg);
         LOGGER.info("国际化测试成功，获取的默认国际化信息：{}", i18nMsg);
-        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, Locale.US, "参数1", "参数2");
+        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.TEST_ERROR, Locale.US, "参数1", "参数2");
         Assert.assertNotNull(i18nMsg);
         LOGGER.info("国际化测试成功，获取的en_US国际化信息：{}", i18nMsg);
         Locale hkLocale = new Locale("zh", "HK");
-        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.ERROR_TEST, hkLocale, "参数1", "参数2");
+        i18nMsg = I18nUtils.getMessage(CommonExceptionCodeConstant.TEST_ERROR, hkLocale, "参数1", "参数2");
         Assert.assertNotNull(i18nMsg);
         LOGGER.info("国际化测试成功，获取的zh_HK国际化信息：{}", i18nMsg);
     }

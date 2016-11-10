@@ -35,7 +35,7 @@ public class ShowcaseController {
      * @param showcaseUser 要创建的演示用户信息
      * @return 操作结果
      */
-    @RequestMapping(value = "/showcase/user/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
     public ResultVO<ShowcaseUser> createShowcaseUser(ShowcaseUser showcaseUser) {
         ResultVO<ShowcaseUser> createUserResult = new ResultVO<>(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.showcase.showcaseUser.success.tips", OperationType.CREATE.getName()));
         try {
@@ -56,7 +56,7 @@ public class ShowcaseController {
      * @param showcaseUser 查询条件
      * @return 符合条件的演示用户分页信息
      */
-    @RequestMapping(value = "/showcase/user/findByPage")
+    @RequestMapping(value = "/user/findByPage")
     public Page<ShowcaseUser> findShowcaseUserByPage(ShowcaseUser showcaseUser) {
         return showcaseUserService.findShowcaseUsersByPage(showcaseUser);
     }
@@ -67,7 +67,7 @@ public class ShowcaseController {
      * @param showcaseUserId 要查询的演示用户主键值
      * @return 符合条件的演示用户信息
      */
-    @RequestMapping(value = "/showcase/user/{showcaseUserId}")
+    @RequestMapping(value = "/user/{showcaseUserId}")
     public ShowcaseUser findShowcaseUserById(@PathVariable("showcaseUserId") String showcaseUserId) {
         return showcaseUserService.findShowcaseUserById(showcaseUserId);
     }
@@ -78,7 +78,7 @@ public class ShowcaseController {
      * @param showcaseUser 需要更新的演示用户信息
      * @return 操作结果
      */
-    @RequestMapping(value = "/showcase/user/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public ResultVO<ShowcaseUser> updateShowcaseUser(ShowcaseUser showcaseUser) {
         ResultVO<ShowcaseUser> updateUserResult = new ResultVO<>(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.showcase.showcaseUser.success.tips", OperationType.UPDATE.getName()));
         try {
@@ -99,7 +99,7 @@ public class ShowcaseController {
      * @param showcaseUser 要删除的演示用户信息
      * @return 操作结果
      */
-    @RequestMapping(value = "/showcase/user/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
     public ResultVO<ShowcaseUser> deleteShowcaseUser(ShowcaseUser showcaseUser) {
         ResultVO<ShowcaseUser> deleteUserResult = new ResultVO<>(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.showcase.showcaseUser.success.tips", OperationType.DELETE.getName()));
         try {

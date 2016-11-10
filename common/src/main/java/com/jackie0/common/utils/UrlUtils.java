@@ -1,6 +1,7 @@
 package com.jackie0.common.utils;
 
 
+import com.jackie0.common.constant.Constant;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletRequest;
@@ -183,5 +184,33 @@ public final class UrlUtils {
             }
         }
         return paramMap;
+    }
+
+    /**
+     * 通过{@link com.jackie0.common.constant.Constant#BASE_FILE_PATH}获取文件路径
+     *
+     * @param subPaths 要加入的子目录
+     * @return 新的文件目录
+     */
+    public static String getFilePathByBase(String... subPaths) {
+        String baseTmpFilePath = Constant.BASE_FILE_PATH;
+        if (baseTmpFilePath.contains(".")) {
+            baseTmpFilePath = System.getProperty(baseTmpFilePath);
+        }
+        StringBuilder baseTmpFilePathBuilder = new StringBuilder(baseTmpFilePath);
+        if (subPaths != null) {
+            for (String subPath : subPaths) {
+                if (baseTmpFilePathBuilder.toString().endsWith("/")) {
+                    baseTmpFilePathBuilder.append(subPath);
+                } else {
+                    if (subPath.startsWith("/")) {
+                        baseTmpFilePathBuilder.append(subPath);
+                    } else {
+                        baseTmpFilePathBuilder.append("/").append(subPath);
+                    }
+                }
+            }
+        }
+        return baseTmpFilePathBuilder.toString();
     }
 }

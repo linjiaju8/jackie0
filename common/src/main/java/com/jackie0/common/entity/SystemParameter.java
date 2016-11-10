@@ -92,4 +92,14 @@ public class SystemParameter extends BaseEntity implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "SystemParameter{" +
+                "systemParameterId='" + systemParameterId + '\'' +
+                ", parameterKey='" + parameterKey + '\'' +
+                ", parameterValue='" + parameterValue + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

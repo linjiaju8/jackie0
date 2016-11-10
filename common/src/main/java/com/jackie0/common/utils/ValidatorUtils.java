@@ -1,6 +1,7 @@
 package com.jackie0.common.utils;
 
 import com.google.code.kaptcha.Constants;
+import com.jackie0.common.constant.CommonExceptionCodeConstant;
 import com.jackie0.common.exception.BusinessException;
 import com.jackie0.common.vo.ResultVO;
 import org.apache.commons.collections4.CollectionUtils;
@@ -63,7 +64,7 @@ public class ValidatorUtils {
         if (CollectionUtils.isNotEmpty(violations)) {
             ConstraintViolation<T> constraintViolation = violations.iterator().next();
             // hibernate.validator无法自动获取国际化资源中定义的错误信息，需要额外修改配置，个人觉得通过工具类获取也很方便
-            throw new BusinessException("exception.5", I18nUtils.getMessage(constraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
+            throw new BusinessException(CommonExceptionCodeConstant.DATA_VALIDATION_ERROR, I18nUtils.getMessage(constraintViolation.getMessageTemplate().replaceAll("\\{", "").replaceAll("}", "")));
         }
     }
 

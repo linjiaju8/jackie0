@@ -1,7 +1,7 @@
 package com.jackie0.showcase.entity;
 
-import com.jackie0.common.constant.Constant;
 import com.jackie0.common.entity.BaseEntity;
+import com.jackie0.showcase.ShowcaseConstant;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -18,7 +18,7 @@ import java.io.Serializable;
  * date 2016-10-26 15:37
  */
 @Entity
-@Table(name = "showcase_user", schema = Constant.COMMON_SCHEMA)
+@Table(name = "showcase_user", schema = ShowcaseConstant.SHOWCASE_SCHEMA)
 public class ShowcaseUser extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -279627191151697543L;

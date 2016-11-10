@@ -74,6 +74,13 @@ public class Constant {
      */
     public static final String DATA_CACHE_PREFIX = "data.cache";
 
+    /**
+     * 基础的文件存储目录
+     * 如果目录是形如：user.home形式则使用{@link System#getProperty(String)}获取真实路径
+     * 也可以直接设置形如：/home绝对路径的目录形式
+     */
+    public static final String BASE_FILE_PATH = "user.home";
+
     private Constant() {
         // fix Utility classes should not have public constructors
     }

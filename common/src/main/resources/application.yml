@@ -19,10 +19,10 @@ spring:
       min-idle: 0
     port: 6379
     # 主从的哨兵配置
-    sentinel:
-      master: master1
+    #sentinel:
+      #master: master1
       #哨兵节点，注意redis配置文件中要把保护模式关掉，否则会客户端连接报错，密码验证可以保留
-      nodes: 10.5.6.214:26379
+      #nodes: 10.5.6.214:26379
   datasource:
     # 参考druid连接池配置https://github.com/alibaba/druid
     type: com.alibaba.druid.pool.DruidDataSource

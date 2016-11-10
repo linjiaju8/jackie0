@@ -31,7 +31,7 @@ public class BusinessException extends RuntimeException {
      * @param args      参数，如：loginSuccess=用户{0}于{1}登录成功，可以传入用户名,当前系统时间进行参数绑定
      */
     public BusinessException(String errorCode, Object... args) {
-        super(I18nUtils.getMessage("tipsCode", errorCode) + I18nUtils.getMessage("tipsMsg") + I18nUtils.getMessage(errorCode, args));
+        super(I18nUtils.getMessage("exception.tipsCode", errorCode) + I18nUtils.getMessage("exception.tipsMsg") + I18nUtils.getMessage(errorCode, args));
         this.errorCode = errorCode;
         errorMsg = I18nUtils.getMessage(errorCode, args);
     }
@@ -44,7 +44,7 @@ public class BusinessException extends RuntimeException {
      * @param args      参数，如：loginSuccess=用户{0}于{1}登录成功，可以传入用户名,当前系统时间进行参数绑定
      */
     public BusinessException(String errorCode, Throwable cause, Object... args) {
-        super(I18nUtils.getMessage("tipsCode", errorCode) + I18nUtils.getMessage("tipsMsg") + I18nUtils.getMessage(errorCode, args), cause);
+        super(I18nUtils.getMessage("exception.tipsCode", errorCode) + I18nUtils.getMessage("exception.tipsMsg") + I18nUtils.getMessage(errorCode, args), cause);
         this.errorCode = errorCode;
         errorMsg = I18nUtils.getMessage(errorCode, args);
     }
