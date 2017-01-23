@@ -23,6 +23,16 @@ public class ReactController {
     }
 
     /**
+     * redux官方演示
+     *
+     * @return redux官方演示页
+     */
+    @RequestMapping("/redux")
+    public String toRedux() {
+        return "react/index-redux.html";
+    }
+
+    /**
      * 登录页
      *
      * @return 登录视图

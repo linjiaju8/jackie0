@@ -42,6 +42,8 @@
         <mysql.version>5.1.18</mysql.version>
         <joda-time.version>2.9.4</joda-time.version>
         <sonar.version>2.7.1</sonar.version>
+        <itextpdf.version>7.0.1</itextpdf.version>
+        <jsoup.version>1.10.2</jsoup.version>
     </properties>
 
     <!-- dependencyManagement通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
@@ -134,6 +136,63 @@
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
+            </dependency>
+
+            <!-- itextpdf操作库 -->
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>kernel</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>layout</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/font-asian -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>font-asian</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/io -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>io</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/forms -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>forms</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/sign -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>sign</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/barcodes -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>barcodes</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -10,6 +10,7 @@ module.exports = {
     //页面入口文件配置
     entry: {
         index: '../webapp/react/index.js',
+        redux: '../webapp/react/index-redux.js',
         login: '../webapp/react/login.js'
     },
     //入口文件输出配置

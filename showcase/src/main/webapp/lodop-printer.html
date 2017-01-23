@@ -1,0 +1,96 @@
+<html xmlns:border-collapse="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- 引入插件驱动js -->
+    <script type="text/javascript" src="LodopFuncs.js"></script>
+    <script type="text/javascript" src="CLodopfuncs.js"></script>
+    <script type="text/javascript">
+        // 执行打印
+        function doPrint() {
+            var LODOP = getLodop();
+            LODOP.PRINT_INIT("批量打印结算单0 ;	");	//打印初始化
+            LODOP.SET_PRINT_PAGESIZE(1, 0, 0, "A4");
+            var pageHtml = document.getElementById("printDiv").innerHTML;
+            LODOP.ADD_PRINT_TABLE("3%", "1%", "94%", "98%", pageHtml);
+            LODOP.PREVIEW();
+        }
+    </script>
+</head>
+<body>
+<object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+</object>
+<button onclick="doPrint();">打印</button>
+
+<div id="printDiv" style="margin:0;padding:0;visibility: hidden;display: none;">
+    <table id="printSettlementTable" border="1" width="100%"
+           style="border-collapse:collapse;border:0 solid black;padding: 2px;">
+        <colgroup>
+            <col style="width:9%;">
+            <col style="width:9%;">
+            <col style="width:10%;">
+            <col style="width:42%;">
+            <col style="width:11%;">
+            <col style="width:10%;">
+            <col style="width:9%;">
+        </colgroup>
+        <thead>
+        <tr>
+            <th colspan="7" style="font-size: 24px;border: 0;" align="center">广州复大医疗股份有限公司复大肿瘤医院&广州复大医疗股份有限公司复大肿瘤医院-病理科结算单</th>
+        </tr>
+        <tr style="font-size: 15px;">
+            <th style="border: 0;" colspan="4" align="left">结算日期：2016-11-01 至 2016-11-01</th>
+            <th style="border: 0;" colspan="3" align="left">结算单号：20161231000013</th>
+        </tr>
+        <tr style="font-size: 15px;">
+            <th style="border: 0;" colspan="4" align="left">业务员：何汉辉</th>
+            <th style="border: 0;" colspan="3" align="left">区域：C区</th>
+        </tr>
+        <tr style="font-size: 14px;">
+            <th align="center">接收日期</th>
+            <th align="center">条形码</th>
+            <th align="center">病人姓名</th>
+            <th align="center">项目名称</th>
+            <th align="center">临床科室</th>
+            <th align="center">医生</th>
+            <th align="center">医院价格</th>
+        </tr>
+        </thead>
+
+        <tbody style="font-size:12px;">
+        <tr>
+            <td style="border:1px solid">2016-11-01</td>
+            <td style="border:1px solid">0126562863</td>
+            <td style="border:1px solid">韦勤海</td>
+            <td style="border:1px solid">超微病理</td>
+            <td style="border:1px solid"></td>
+            <td style="border:1px solid"></td>
+            <td style="border:1px solid">345.00</td>
+        </tr>
+        </tbody>
+
+        <tfoot style="font-size: 13px;">
+        <tr>
+            <td style="border: 0;" colspan="3">(本页小计)记录数：1</td>
+            <td style="border: 0;">医院价格：￥ 345.00</td>
+            <td style="border: 0;">实际价格：</td>
+            <td style="border: 0;" colspan="2">￥ 345.00</td>
+        </tr>
+        <tr>
+            <td style="border: 0;" colspan="3">(结算单总计)记录数：18768676798378998</td>
+            <td style="border: 0;">医院价格：￥ 345.00</td>
+            <td style="border: 0;">实际价格：</td>
+            <td style="border: 0;" colspan="2">￥ 224.25</td>
+        </tr>
+        <tr>
+            <td style="border: 0;" colspan="7">操作人：魏桂珍</td>
+        </tr>
+        <tr>
+            <td style="border: 0;" colspan="7" align="right">第1页/共1页</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+</body>
+</html>
