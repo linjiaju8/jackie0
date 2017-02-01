@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -49,23 +50,26 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
             int index = 0;
             for (String dateFormat : dateFormats) {
                 try {
-                    formattedDate = DateUtils.parseDate(formattedDateText, dateFormat);
-                    if (formattedDate != null) {
-                        if (dateFormat.equals(I18nUtils.getMessage("ws.timestamp.format")) || dateFormat.equals(I18nUtils.getMessage("ws.yyyyMMdd.HHmmss.format"))) {
-                            // 约定精确到秒及以上经度的时间格式统一用Timestamp映射，经度不够用Date映射
-                            formattedDate = new Timestamp(formattedDate.getTime());
-                        }
-                        break; // 有匹配的格式转换成功则跳出匹配，返回结果
-                    }
+                    formattedDate = formatDate(formattedDateText, dateFormat);
+                    break; // 有匹配的格式转换成功则跳出匹配，返回结果
                 } catch (Exception e) {
                     formattedDate = null;
-                    LOGGER.debug("日期{}按照格式{}转换日期异常-->{},跳到下一个格式！", formattedDateText, dateFormat, e.getMessage());
+                    LOGGER.debug("日期{}按照格式{}转换日期异常-->{},跳到下一个格式！", formattedDateText, dateFormat, e);
                     if (index == dateFormats.length - 1) {
                         LOGGER.info("所有格式【{}】都无法转换当前日期{}默认返回日期的toString()结果！", ArrayUtils.toString(dateFormats), formattedDateText);
                     }
                 }
                 index++;
             }
+        }
+        return formattedDate;
+    }
+
+    private static Date formatDate(String dateString, String formatPattern) throws ParseException {
+        Date formattedDate = DateUtils.parseDate(dateString, formatPattern);
+        if (formattedDate != null && (formatPattern.equals(I18nUtils.getMessage("ws.timestamp.format")) || formatPattern.equals(I18nUtils.getMessage("ws.yyyyMMdd.HHmmss.format")))) {
+            // 约定精确到秒及以上经度的时间格式统一用Timestamp映射，经度不够用Date映射
+            formattedDate = new Timestamp(formattedDate.getTime());
         }
         return formattedDate;
     }

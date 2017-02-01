@@ -1,8 +1,6 @@
 package com.jackie0.common.constant;
 
 
-import java.sql.Timestamp;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -15,6 +13,7 @@ import java.util.Locale;
  * @since JDK 1.8
  */
 public class Constant {
+
     /**
      * 项目默认编码
      */
@@ -38,7 +37,7 @@ public class Constant {
     /**
      * 系统数据库归档时间字段默认归档时间
      */
-    public static final Timestamp DEF_ARCHIVE_BASE_DATE = new Timestamp(new GregorianCalendar(2099, 1, 1).getTime().getTime());
+    public static final String DEF_ARCHIVE_BASE_DATE_STR = "2099-01-01";
 
     /**
      * web自助密码验证的最低安全级别
@@ -64,4 +63,25 @@ public class Constant {
      * common包对应的数据库schema
      */
     public static final String COMMON_SCHEMA = "jackie0";
+
+    /**
+     * session类缓存key的前缀部分，cache的统一命名规范{@link #SESSION_CACHE_PREFIX}或{@link #DATA_CACHE_PREFIX}+业务编码+自己的缓存的业务key
+     */
+    public static final String SESSION_CACHE_PREFIX = "session.cache";
+
+    /**
+     * 数据类缓存key的前缀部分，cache的统一命名规范{@link #SESSION_CACHE_PREFIX}或{@link #DATA_CACHE_PREFIX}+业务编码+自己的缓存的业务key
+     */
+    public static final String DATA_CACHE_PREFIX = "data.cache";
+
+    /**
+     * 基础的文件存储目录
+     * 如果目录是形如：user.home形式则使用{@link System#getProperty(String)}获取真实路径
+     * 也可以直接设置形如：/home绝对路径的目录形式
+     */
+    public static final String BASE_FILE_PATH = "user.home";
+
+    private Constant() {
+        // fix Utility classes should not have public constructors
+    }
 }

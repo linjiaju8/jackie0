@@ -51,10 +51,8 @@ public class CustomCollectionUtils {
         List<T> elementsPropertiesValue = new ArrayList<>();
         for (E data : datas) {
             T propVal = DataUtils.getField(data, elementsPropertyName, clazz);
-            if (propVal != null) {
-                if ((keepDistinct && !elementsPropertiesValue.contains(propVal)) || !keepDistinct) {
-                    elementsPropertiesValue.add(propVal);
-                }
+            if (propVal != null && ((keepDistinct && !elementsPropertiesValue.contains(propVal)) || !keepDistinct)) {
+                elementsPropertiesValue.add(propVal);
             }
         }
         return elementsPropertiesValue;

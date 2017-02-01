@@ -11,6 +11,13 @@
     <name>platform Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <!-- 引入自身common依赖 -->
+        <dependency>
+            <groupId>com.jackie0</groupId>
+            <artifactId>common</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+
         <!--核心 POM，包含自动配置支持、日志库和对 YAML 配置文件的支持。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,10 +79,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-        <!--添加 Log4j2的支持。-->
+        <!--添加 使用 Spring Boot 默认的日志框架 Logback。-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
         <!--使用 Spring Boot 默认的 Tomcat 作为应用服务器。-->
@@ -100,7 +107,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -2,10 +2,8 @@ package com.jackie0.common.aop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jackie0.common.constant.Constant;
 import com.jackie0.common.mongo.entity.MongoOperationLog;
 import com.jackie0.common.service.OperationLogService;
-import com.jackie0.common.utils.UrlUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -18,16 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 记录客户操作日志切面
@@ -41,7 +36,7 @@ import java.util.Objects;
 @Aspect
 @Component
 public class OperationLogAspect {
-    private Logger LOGGER = LoggerFactory.getLogger(OperationLogAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OperationLogAspect.class);
 
     @Autowired
     private OperationLogService operationLogService;
@@ -53,6 +48,7 @@ public class OperationLogAspect {
      */
     @Pointcut("within(com.jackie0.*) && @annotation(operationLog)")
     public void operationLogMeasuringPointcut(OperationLog operationLog) {
+        // 无业务逻辑，该方法起标记作用
     }
 
     /**
@@ -75,34 +71,8 @@ public class OperationLogAspect {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Object oldData = null;
-            if (operationLog.oldDataIndex() >= 0) {
-                oldData = parames[operationLog.oldDataIndex()];
-            } else if (operationLog.oldDataIndex() == -1) {
-                oldData = retVal;
-            }
-            if (oldData != null) {
-                operationLogEntity.setOldJsonData(objectMapper.writeValueAsString(oldData));
-                String oldDataClassPath = oldData.getClass().getName();
-                operationLogEntity.setOldDataClass(oldDataClassPath);
-                String oldDataParamName = operationLog.oldDataParamName();
-                oldDataParamName = getParamName(oldDataClassPath, oldDataParamName);
-                operationLogEntity.setOldDataParamName(oldDataParamName);
-            }
-            Object newData = null;
-            if (operationLog.newDataIndex() >= 0) {
-                newData = parames[operationLog.newDataIndex()];
-            } else if (operationLog.newDataIndex() == -1) {
-                newData = retVal;
-            }
-            if (newData != null) {
-                operationLogEntity.setNewJsonData(objectMapper.writeValueAsString(newData));
-                String newDataClassPath = newData.getClass().getName();
-                operationLogEntity.setNewDataClass(newDataClassPath);
-                String newDataParamName = operationLog.newDataParamName();
-                newDataParamName = getParamName(newDataClassPath, newDataParamName);
-                operationLogEntity.setNewDataParamName(newDataParamName);
-            }
+            setOldDataParam(operationLog, retVal, parames, operationLogEntity, objectMapper);
+            setNewDataParam(operationLog, retVal, parames, operationLogEntity, objectMapper);
         } catch (RuntimeException e) {
             if (operationLog.abend()) {
                 throw e;
@@ -111,10 +81,7 @@ public class OperationLogAspect {
             }
         }
         try {
-            HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            String url = StringUtils.isBlank(operationLog.url()) ? UrlUtils.getCurUrl(httpServletRequest) : operationLog.url(); // TODO 如果没有url应该是首页地址，首页地址需要读取系统参数的，区分子系统
-            url = url.startsWith(Constant.HTTP_PREFIX) || url.startsWith(Constant.HTTPS_PREFIX) ? url : (UrlUtils.getCurUrl(httpServletRequest) + url);
-            operationLogEntity.setUrl(url);
+            operationLogEntity.setUrl(operationLog.url());
             operationLogService.createOperationLog(operationLogEntity);
             LOGGER.debug("类：{}中的方法：{}配置客户日志注解：{}，执行记录日志操作成功！", className, signature, OperationLog.class.getName());
         } catch (Exception e) {
@@ -126,64 +93,90 @@ public class OperationLogAspect {
         }
     }
 
+    private void setNewDataParam(OperationLog operationLog, Object retVal, Object[] parames, MongoOperationLog operationLogEntity, ObjectMapper objectMapper) throws JsonProcessingException {
+        Object newData = null;
+        if (operationLog.newDataIndex() >= 0) {
+            newData = parames[operationLog.newDataIndex()];
+        } else if (operationLog.newDataIndex() == -1) {
+            newData = retVal;
+        }
+        if (newData != null) {
+            operationLogEntity.setNewJsonData(objectMapper.writeValueAsString(newData));
+            String newDataClassPath = newData.getClass().getName();
+            operationLogEntity.setNewDataClass(newDataClassPath);
+            String newDataParamName = getParamName(newDataClassPath, operationLog.newDataParamName());
+            operationLogEntity.setNewDataParamName(newDataParamName);
+        }
+    }
+
+    private void setOldDataParam(OperationLog operationLog, Object retVal, Object[] parames, MongoOperationLog operationLogEntity, ObjectMapper objectMapper) throws JsonProcessingException {
+        Object oldData = null;
+        if (operationLog.oldDataIndex() >= 0) {
+            oldData = parames[operationLog.oldDataIndex()];
+        } else if (operationLog.oldDataIndex() == -1) {
+            oldData = retVal;
+        }
+        if (oldData != null) {
+            operationLogEntity.setOldJsonData(objectMapper.writeValueAsString(oldData));
+            String oldDataClassPath = oldData.getClass().getName();
+            operationLogEntity.setOldDataClass(oldDataClassPath);
+            String oldDataParamName = getParamName(oldDataClassPath, operationLog.oldDataParamName());
+            operationLogEntity.setOldDataParamName(oldDataParamName);
+        }
+    }
+
     private String getParamName(String dataClassPath, String dataParamName) {
+        String newDataParamName = dataParamName;
         if (StringUtils.isBlank(dataClassPath)) {
             String[] oldDataClassNames = dataClassPath.split("\\.");
             String oldDataClassName = ArrayUtils.isNotEmpty(oldDataClassNames) ? oldDataClassNames[oldDataClassNames.length - 1] : "";
             String firstString = oldDataClassName.substring(0, 1);
-            dataParamName = oldDataClassName.replaceFirst(firstString, firstString.toLowerCase());
+            newDataParamName = oldDataClassName.replaceFirst(firstString, firstString.toLowerCase());
         }
-        return dataParamName;
+        return newDataParamName;
     }
 
     /**
      * 生成日志描述
      *
      * @param description 原始描述
-     * @param parames     AOP拦截方法参数
+     * @param parameters  AOP拦截方法参数
      * @param retVal      AOP拦截方法执行返回值
      * @return 日志描述
      */
-    private String buildDescription(String description, Object[] parames, Object retVal) {
-        String newDescription = "";
-        if (StringUtils.isNotBlank(description)) {
-            newDescription = description;
-            String[] descriptionLeftArray = description.split("\\{");
-            List<String> regexs = new ArrayList<>();
-            // 查找通配符中{参数下标.属性}字符串
-            if (ArrayUtils.isNotEmpty(descriptionLeftArray)) {
-                for (String descriptionLeft : descriptionLeftArray) {
-                    if (descriptionLeft.contains("}")) {
-                        regexs.add(descriptionLeft.split("}")[0]);
-                    }
-                }
-            }
-
-            // 替换通配符的值
-            for (String regex : regexs) {
-                String[] paramIndexAndObj = regex.split("\\.");
-                if (ArrayUtils.isNotEmpty(paramIndexAndObj) && paramIndexAndObj.length == 2) {
-                    if (NumberUtils.isNumber(paramIndexAndObj[0])) {
-                        Object paramData = null;
-                        if (NumberUtils.toInt(paramIndexAndObj[0]) >= 0) {
-                            paramData = parames[NumberUtils.toInt(paramIndexAndObj[0])];
-                        } else if (NumberUtils.toInt(paramIndexAndObj[0]) == -1) {
-                            paramData = retVal;
-                        }
-                        if (paramData != null) {
-                            Object paramVal;
-                            if (paramData instanceof Map) {
-                                paramVal = ((Map) paramData).get(paramIndexAndObj[1]);
-                            } else {
-                                Field field = ReflectionUtils.findField(paramData.getClass(), paramIndexAndObj[1]);
-                                paramVal = ReflectionUtils.getField(field, paramData);
-                            }
-                            newDescription = newDescription.replace("{" + regex + "}", Objects.toString(paramVal, ""));
-                        }
-                    }
-                }
+    private static String buildDescription(String description, Object[] parameters, Object retVal) {
+        String newDescription = description;
+        Pattern pattern = Pattern.compile("(\\{(\\d|-\\d)\\.(\\w+)})"); // 匹配形如{0.name}的通配符
+        boolean isMatched = true;
+        while (isMatched) {
+            Matcher matcher = pattern.matcher(newDescription);
+            isMatched = matcher.find();
+            if (isMatched) {
+                // 正则表达式："(\\{(\\d|-\\d)\\.(\\w+)})"，把形如{0.name}的匹配字符串分为了三组：group(1):{0.name}、group(2):0、group(3):name
+                String parameterIndexStr = matcher.group(2);
+                String parameterName = matcher.group(3);
+                String parameterValue = getDescriptionParameterValue(parameters, retVal, parameterIndexStr, parameterName);
+                newDescription = matcher.replaceFirst(parameterValue);
             }
         }
         return newDescription;
+    }
+
+    private static String getDescriptionParameterValue(Object[] parameters, Object retVal, String parameterIndexStr, String parameterName) {
+        Object parameterObject;
+        String parameterValue;
+        if ("-1".equals(parameterIndexStr)) {
+            parameterObject = retVal;
+        } else {
+            parameterObject = parameters[NumberUtils.toInt(parameterIndexStr)];
+        }
+        if (parameterObject instanceof Map) {
+            parameterValue = Objects.toString(((Map) parameterObject).get(parameterName), "");
+        } else {
+            Field field = ReflectionUtils.findField(parameterObject.getClass(), parameterName);
+            field.setAccessible(true);
+            parameterValue = Objects.toString(ReflectionUtils.getField(field, parameterObject), "");
+        }
+        return parameterValue;
     }
 }

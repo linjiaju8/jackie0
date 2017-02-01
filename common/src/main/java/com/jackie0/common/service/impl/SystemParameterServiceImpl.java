@@ -4,15 +4,18 @@ import com.jackie0.common.dao.SystemParameterDao;
 import com.jackie0.common.entity.SystemParameter;
 import com.jackie0.common.enumeration.DeleteTag;
 import com.jackie0.common.enumeration.OperationType;
+import com.jackie0.common.exception.BusinessException;
 import com.jackie0.common.service.SystemParameterService;
 import com.jackie0.common.utils.DataUtils;
 import com.jackie0.common.utils.I18nUtils;
 import com.jackie0.common.utils.ValidatorUtils;
-import com.jackie0.common.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -32,53 +35,40 @@ import java.util.List;
 public class SystemParameterServiceImpl implements SystemParameterService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemParameterServiceImpl.class);
 
+    private static final String RESULT_PARAMETERKEY_CACHE_KEY = "'" + SystemParameter.DATA_SYSTEM_PARAMETER_KEY_PREFIX + "' + #result.parameterKey";
+    private static final String PARAMETERKEY_CACHE_KEY = "'" + SystemParameter.DATA_SYSTEM_PARAMETER_KEY_PREFIX + "' + #systemParameterKey";
+
     @Autowired
     private SystemParameterDao systemParameterDao;
 
     @Override
-    public ResultVO createSystemParameter(SystemParameter systemParameter) {
-        ResultVO createResult = validSystemParameter(systemParameter, OperationType.CREATE);
-        LOGGER.debug("新增系统参数验证结果-->{}", createResult);
-        if (ResultVO.FAIL.equals(createResult.getErrorCode())) {
-            return createResult;
-        }
+    @CachePut(cacheNames = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY, condition = "#result != null")
+    public SystemParameter createSystemParameter(SystemParameter systemParameter) {
+        validSystemParameter(systemParameter, OperationType.CREATE);
         DataUtils.setBaseEntityField(systemParameter, OperationType.CREATE);
-        SystemParameter systemParameterCreate = systemParameterDao.save(systemParameter);
-        createResult.setResult(systemParameterCreate);
-        return createResult;
+        return systemParameterDao.save(systemParameter);
     }
 
     @Override
-    public ResultVO updateSystemParameter(SystemParameter systemParameter) {
-        ResultVO updateResult = validSystemParameter(systemParameter, OperationType.UPDATE);
-        LOGGER.debug("修改系统参数验证结果-->{}", updateResult);
-        if (ResultVO.FAIL.equals(updateResult.getErrorCode())) {
-            return updateResult;
-        }
+    @CachePut(cacheNames = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY, condition = "#result != null")
+    public SystemParameter updateSystemParameter(SystemParameter systemParameter) {
+        validSystemParameter(systemParameter, OperationType.UPDATE);
         DataUtils.setBaseEntityField(systemParameter, OperationType.UPDATE);
-        SystemParameter systemParameterUpdate = systemParameterDao.save(systemParameter);
-        updateResult.setResult(systemParameterUpdate);
-        return updateResult;
+        return systemParameterDao.save(systemParameter);
     }
 
     @Override
-    public ResultVO deleteSystemParameterById(String systemParameterId) {
-        ResultVO validResult = new ResultVO(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.common.systemParameter.success.tips", OperationType.DELETE.getName()));
+    @CacheEvict(value = {"systemParameterCache"}, key = RESULT_PARAMETERKEY_CACHE_KEY)
+    public SystemParameter deleteSystemParameterById(String systemParameterId) {
         if (StringUtils.isBlank(systemParameterId)) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.parameter.canNotBeNull", OperationType.DELETE, I18nUtils.getMessage("jackie0.common.systemParameter.primaryKey")));
-            return validResult;
+            throw new BusinessException("jackie0.common.parameter.canNotBeNull", OperationType.DELETE, I18nUtils.getMessage("jackie0.common.systemParameter.primaryKey"));
         }
         SystemParameter systemParameter = systemParameterDao.findOne(systemParameterId);
         if (systemParameter == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.systemParameter.notExists"));
-            return validResult;
+            throw new BusinessException("jackie0.common.systemParameter.notExists");
         }
         DataUtils.setBaseEntityField(systemParameter, OperationType.DELETE);
-        SystemParameter systemParameterDelete = systemParameterDao.save(systemParameter);
-        validResult.setResult(systemParameterDelete);
-        return validResult;
+        return systemParameterDao.save(systemParameter);
     }
 
     @Override
@@ -91,6 +81,7 @@ public class SystemParameterServiceImpl implements SystemParameterService {
     }
 
     @Override
+    @Cacheable(cacheNames = {"systemParameterCache"}, key = PARAMETERKEY_CACHE_KEY)
     public SystemParameter findSystemParameterByKey(String systemParameterKey) {
         if (StringUtils.isBlank(systemParameterKey)) {
             LOGGER.info("根据键值查询系统参数方法接收参数为空，返回null！");
@@ -111,29 +102,18 @@ public class SystemParameterServiceImpl implements SystemParameterService {
         return systemParameterValue;
     }
 
-    private ResultVO validSystemParameter(SystemParameter systemParameter, OperationType operationType) {
-        ResultVO validResult = new ResultVO(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.common.systemParameter.success.tips", operationType.getName()));
+    private void validSystemParameter(SystemParameter systemParameter, OperationType operationType) {
         if (systemParameter == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.systemParameter.canNotBeNull"));
-            return validResult;
+            throw new BusinessException("jackie0.common.systemParameter.canNotBeNull");
         }
-        validResult = ValidatorUtils.validateData(systemParameter, true);
-        if (ResultVO.FAIL.equals(validResult.getErrorCode())) {
-            return validResult;
-        }
+        ValidatorUtils.validate(systemParameter);
         SystemParameter systemParameterTest = findSystemParameterByKey(systemParameter.getParameterKey());
         if (operationType == OperationType.CREATE && systemParameterTest != null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.systemParameter.alreadyExists", systemParameter.getParameterKey()));
-            return validResult;
+            throw new BusinessException("jackie0.common.systemParameter.alreadyExists", systemParameter.getParameterKey());
         }
         if (operationType == OperationType.UPDATE && systemParameterTest == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.systemParameter.notExists", systemParameter.getParameterKey()));
-            return validResult;
+            throw new BusinessException("jackie0.common.systemParameter.notExists", systemParameter.getParameterKey());
         }
-        return validResult;
     }
 
     private Specification<SystemParameter> getSystemParameterWhereClause(final SystemParameter systemParameter) {

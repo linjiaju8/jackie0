@@ -1,13 +1,13 @@
 package com.jackie0.common.filter;
 
+import com.jackie0.common.constant.Constant;
 import com.jackie0.common.utils.CSRFTokenManager;
 import com.jackie0.common.utils.I18nUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +25,10 @@ import java.util.Enumeration;
  * @since JDK 1.8
  */
 public class SecurityFilter implements Filter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        // 没有需要初始化的配置或参数
     }
 
     @Override
@@ -54,7 +53,7 @@ public class SecurityFilter implements Filter {
         while (paramEnum != null && pass && paramEnum.hasMoreElements()) {
             String paramName = paramEnum.nextElement();
             String paramValue = httpServletRequest.getParameter(paramName);
-            pass = paramValue.equals(new HTMLFilter().filter(paramValue));
+            pass = paramValue.equals(HtmlUtils.htmlEscape(paramValue, Constant.DEF_ENC));
         }
         return pass;
     }
@@ -82,6 +81,6 @@ public class SecurityFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        // 没有要销毁的数据
     }
 }

@@ -51,7 +51,6 @@ public class CaptchaValidateFilter extends AccessControlFilter {
             return true;
         }
         //3、密码错误一定次数时，才效验 验证码
-        //if(!Permission.needValidCode(httpServletRequest.getParameter("userName"))) return true;
 
         //4、此时是表单提交，验证验证码是否正确
         return ValidatorUtils.validateCaptcha(httpServletRequest, httpServletRequest.getParameter(captchaParam));

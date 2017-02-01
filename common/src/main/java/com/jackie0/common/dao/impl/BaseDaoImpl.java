@@ -31,6 +31,9 @@ import java.util.Map;
  */
 public class BaseDaoImpl implements BaseDaoPlus {
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseDaoImpl.class);
+
+    private static final String SQL_LOG = "sql-->{}";
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -164,7 +167,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
      */
     private <E> List<E> findAll(String sql, Map<String, Object> mapParams, Object[] arrayParams, ResultTransformer transformer) {
         Query resultQuery = entityManager.createNativeQuery(sql);
-        LOGGER.debug("sql-->{}", sql);
+        LOGGER.debug(SQL_LOG, sql);
         setParams(mapParams, arrayParams, resultQuery);
         resultQuery.unwrap(SQLQuery.class).setResultTransformer(transformer);
         List<E> list = resultQuery.getResultList();
@@ -249,7 +252,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
      */
     private <E> E findOne(String sql, Map<String, Object> mapParams, Object[] arrayParams, ResultTransformer transformer) {
         Query resultQuery = entityManager.createNativeQuery(sql);
-        LOGGER.debug("sql-->{}", sql);
+        LOGGER.debug(SQL_LOG, sql);
         setParams(mapParams, arrayParams, resultQuery);
         resultQuery.unwrap(SQLQuery.class).setResultTransformer(transformer);
         E e;
@@ -258,6 +261,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
         } catch (NoResultException noResultException) {
             // 没有结果会抛该异常
             e = null;
+            LOGGER.info("BaseDaoImpl.findOne(String sql, Map<String, Object> mapParams, Object[] arrayParams, ResultTransformer transformer)方法抛出NoResultException，返回结果设置为null", noResultException);
         }
         // 分离内存中受EntityManager管理的实体bean，让VM进行垃圾回收
         entityManager.clear();
@@ -272,7 +276,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
      */
     private void save(String sql, Map<String, Object> mapParams, Object[] arrayParams) {
         Query query = entityManager.createNativeQuery(sql);
-        LOGGER.debug("sql-->{}", sql);
+        LOGGER.debug(SQL_LOG, sql);
         setParams(mapParams, arrayParams, query);
         query.executeUpdate();
         entityManager.flush();

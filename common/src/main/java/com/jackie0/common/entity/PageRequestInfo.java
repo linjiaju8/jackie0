@@ -1,11 +1,8 @@
 package com.jackie0.common.entity;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.AbstractPageRequest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -23,11 +20,6 @@ public class PageRequestInfo implements Serializable {
     private static final int DEF_SIZE = 15;
     private static final int DEF_PAGE = 1;
     private static final long serialVersionUID = -6001903009948393880L;
-
-    public PageRequestInfo() {
-        page = DEF_PAGE;
-        size = DEF_SIZE;
-    }
 
     // 排序字段名称
     private String sortFieldName;
@@ -50,6 +42,11 @@ public class PageRequestInfo implements Serializable {
 
     public void setROWNUM_(BigDecimal ROWNUM_) {
         this.ROWNUM_ = ROWNUM_;
+    }
+
+    public PageRequestInfo() {
+        page = DEF_PAGE;
+        size = DEF_SIZE;
     }
 
     public String getSortFieldName() {

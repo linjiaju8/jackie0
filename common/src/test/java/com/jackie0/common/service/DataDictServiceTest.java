@@ -4,12 +4,14 @@ import com.jackie0.common.BaseSprintTestCase;
 import com.jackie0.common.constant.Constant;
 import com.jackie0.common.dao.DataDictDao;
 import com.jackie0.common.entity.DataDict;
-import com.jackie0.common.vo.ResultVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +39,11 @@ public class DataDictServiceTest extends BaseSprintTestCase {
     @Autowired
     private DataDictDao dataDictDao;
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
     public void testCreateDataDict() {
-        ResultVO createResult = dataDictService.createDataDict(null);
-        Assert.assertTrue(ResultVO.FAIL.equals(createResult.getErrorCode()));
-
         DataDict dataDict = new DataDict();
         dataDict.setDescription("单元测试性别字典-男性");
         dataDict.setGroupCode("sex");
@@ -49,15 +51,12 @@ public class DataDictServiceTest extends BaseSprintTestCase {
         dataDict.setDictKey("male");
         dataDict.setDictValue("男性");
         dataDict.setDictOrder(1);
-        createResult = dataDictService.createDataDict(dataDict);
-        Assert.assertTrue(ResultVO.SUCCESS.equals(createResult.getErrorCode()));
+        DataDict savedDataDict = dataDictService.createDataDict(dataDict);
+        Assert.assertTrue(savedDataDict != null && StringUtils.isNotBlank(savedDataDict.getDataDictId()));
     }
 
     @Test
     public void testCreateDataDicts() {
-        ResultVO createResult = dataDictService.createDataDicts(null);
-        Assert.assertTrue(ResultVO.FAIL.equals(createResult.getErrorCode()));
-
         List<DataDict> sexDataDicts = new ArrayList<>(2);
         DataDict maleDataDict = new DataDict();
         maleDataDict.setDescription("单元测试性别字典-男性");
@@ -75,8 +74,8 @@ public class DataDictServiceTest extends BaseSprintTestCase {
         femaleDataDict.setDictValue("女性");
         femaleDataDict.setDictOrder(2);
         sexDataDicts.add(femaleDataDict);
-        createResult = dataDictService.createDataDicts(sexDataDicts);
-        Assert.assertTrue(ResultVO.SUCCESS.equals(createResult.getErrorCode()));
+        Iterable<DataDict> dataDicts = dataDictService.createDataDicts(sexDataDicts);
+        Assert.assertTrue(dataDicts != null && dataDicts.iterator().hasNext());
     }
 
     @Test
@@ -91,7 +90,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
     public void testFindDataDictsByGroupCode() {
         List<DataDict> dataDicts = buildDataDcitsData();
         dataDictService.createDataDicts(dataDicts);
-        List<DataDict> dataDictRsults = dataDictService.findDataDictsByGroupCode("test");
+        List<DataDict> dataDictRsults = dataDictService.findDataDictsByGroupCode("testDataDcit");
         Assert.assertNotNull(dataDictRsults);
     }
 
@@ -99,7 +98,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
     public void testFindDataDictByGroupCodeAndDictKey() {
         List<DataDict> dataDicts = buildDataDcitsData();
         dataDictService.createDataDicts(dataDicts);
-        DataDict dataDict = dataDictService.findDataDictByGroupCodeAndDictKey("test", "dictKey1");
+        DataDict dataDict = dataDictService.findDataDictByGroupCodeAndDictKey("testDataDcit", "dictKey1");
         Assert.assertNotNull(dataDict);
     }
 
@@ -124,7 +123,7 @@ public class DataDictServiceTest extends BaseSprintTestCase {
             dataDict.setDictKey("dictKey" + i);
             dataDict.setDictValue("dictValue" + i);
             dataDict.setDescription("单元测试数据字典");
-            dataDict.setGroupCode("test");
+            dataDict.setGroupCode("testDataDcit");
             dataDict.setParentGroupCode(Constant.DEFAULT_PARENT_CODE);
             dataDicts.add(dataDict);
         }

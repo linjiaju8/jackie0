@@ -1,6 +1,7 @@
 package com.jackie0.common.utils;
 
 
+import com.jackie0.common.constant.Constant;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletRequest;
@@ -20,6 +21,8 @@ import java.util.Map;
  */
 public final class UrlUtils {
 
+    private static final String UNKNOWN = "unknown";
+
     private UrlUtils() {
     }
 
@@ -31,13 +34,13 @@ public final class UrlUtils {
      */
     public static String getRemoteIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return ip;
@@ -150,7 +153,7 @@ public final class UrlUtils {
             String subQueryString = queryString.substring(replaceKeyIndex);
             String replaceQueryString = subQueryString;
             if (subQueryString.contains("&")) {
-                replaceQueryString = subQueryString.substring(0, subQueryString.indexOf("&"));
+                replaceQueryString = subQueryString.substring(0, subQueryString.indexOf('&'));
             }
             String newValueString = replaceKey + "=" + newValue;
             newQueryString = queryString.replace(replaceQueryString, newValueString);
@@ -181,5 +184,33 @@ public final class UrlUtils {
             }
         }
         return paramMap;
+    }
+
+    /**
+     * 通过{@link com.jackie0.common.constant.Constant#BASE_FILE_PATH}获取文件路径
+     *
+     * @param subPaths 要加入的子目录
+     * @return 新的文件目录
+     */
+    public static String getFilePathByBase(String... subPaths) {
+        String baseTmpFilePath = Constant.BASE_FILE_PATH;
+        if (baseTmpFilePath.contains(".")) {
+            baseTmpFilePath = System.getProperty(baseTmpFilePath);
+        }
+        StringBuilder baseTmpFilePathBuilder = new StringBuilder(baseTmpFilePath);
+        if (subPaths != null) {
+            for (String subPath : subPaths) {
+                if (baseTmpFilePathBuilder.toString().endsWith("/")) {
+                    baseTmpFilePathBuilder.append(subPath);
+                } else {
+                    if (subPath.startsWith("/")) {
+                        baseTmpFilePathBuilder.append(subPath);
+                    } else {
+                        baseTmpFilePathBuilder.append("/").append(subPath);
+                    }
+                }
+            }
+        }
+        return baseTmpFilePathBuilder.toString();
     }
 }

@@ -4,18 +4,17 @@ import com.jackie0.common.dao.DataDictDao;
 import com.jackie0.common.entity.DataDict;
 import com.jackie0.common.enumeration.DeleteTag;
 import com.jackie0.common.enumeration.OperationType;
+import com.jackie0.common.exception.BusinessException;
 import com.jackie0.common.service.DataDictService;
 import com.jackie0.common.utils.DataUtils;
-import com.jackie0.common.utils.I18nUtils;
 import com.jackie0.common.utils.ValidatorUtils;
-import com.jackie0.common.vo.ResultVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Caching;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,44 +36,33 @@ import java.util.List;
 @Service("dataDictService")
 public class DataDictServiceImpl implements DataDictService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataDictServiceImpl.class);
+    private static final String RESULT_GROUPCODE_DICTKEY_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #result.groupCode + #result.dictKey";
+    private static final String GROUPCODE_DICTKEY_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #groupCode + #dictKey";
+    private static final String GROUPCODE_CACHE_KEY = "'" + DataDict.DATA_DICT_CACHE_KEY_PREFIX + "' + #groupCode";
 
     @Autowired
     private DataDictDao dataDictDao;
 
 
     @Override
-    @CachePut(key = "#dataDict.groupCode#dataDict.dictKey", cacheNames = "dataDictCache", condition = "#result.errorCode eq 'success'")
-    public ResultVO createDataDict(DataDict dataDict) {
-        ResultVO createResult = validDataDict(dataDict, OperationType.CREATE);
-        LOGGER.debug("新增数据字典验证结果-->{}", createResult);
-        if (ResultVO.FAIL.equals(createResult.getErrorCode())) {
-            return createResult;
-        }
+    @CachePut(cacheNames = {"dataDictCache"}, key = RESULT_GROUPCODE_DICTKEY_CACHE_KEY, condition = "#result != null")
+    public DataDict createDataDict(DataDict dataDict) {
+        validDataDict(dataDict, OperationType.CREATE);
         DataUtils.setBaseEntityField(dataDict, OperationType.CREATE);
-        DataDict dataDictCreate = dataDictDao.save(dataDict);
-        createResult.setResult(dataDictCreate);
-        return createResult;
+        return dataDictDao.save(dataDict);
     }
 
     @Override
     @Transactional
-    public ResultVO createDataDicts(List<DataDict> dataDicts) {
-        ResultVO createResult = new ResultVO(ResultVO.SUCCESS, OperationType.CREATE.getName() + I18nUtils.getMessage("jackie0.common.dataDict.success.tips"));
+    public Iterable<DataDict> createDataDicts(List<DataDict> dataDicts) {
         if (CollectionUtils.isEmpty(dataDicts)) {
-            createResult = new ResultVO(ResultVO.FAIL, I18nUtils.getMessage("jackie0.common.dataDict.canNotBeNull"));
-            return createResult;
+            throw new BusinessException("jackie0.common.dataDict.canNotBeNull");
         }
         for (DataDict dataDict : dataDicts) {
-            createResult = validDataDict(dataDict, OperationType.CREATE);
-            LOGGER.debug("批量新增数据字典验证结果-->{}", createResult);
-            if (ResultVO.FAIL.equals(createResult.getErrorCode())) {
-                return createResult;
-            }
+            validDataDict(dataDict, OperationType.CREATE);
             DataUtils.setBaseEntityField(dataDict, OperationType.CREATE);
         }
-        Iterable<DataDict> dataDictsCreate = dataDictDao.save(dataDicts);
-        createResult.setResult(dataDictsCreate);
-        return createResult;
+        return dataDictDao.save(dataDicts);
     }
 
     @Override
@@ -89,6 +77,7 @@ public class DataDictServiceImpl implements DataDictService {
     }
 
     @Override
+    @Cacheable(cacheNames = {"dataDictCache"}, key = GROUPCODE_CACHE_KEY)
     public List<DataDict> findDataDictsByGroupCode(String groupCode) {
         if (StringUtils.isBlank(groupCode)) {
             return Collections.emptyList();
@@ -101,6 +90,7 @@ public class DataDictServiceImpl implements DataDictService {
     }
 
     @Override
+    @Cacheable(cacheNames = {"dataDictCache"}, key = GROUPCODE_DICTKEY_CACHE_KEY)
     public DataDict findDataDictByGroupCodeAndDictKey(String groupCode, String dictKey) {
         if (StringUtils.isBlank(groupCode) || StringUtils.isBlank(dictKey)) {
             return null;
@@ -111,29 +101,18 @@ public class DataDictServiceImpl implements DataDictService {
         return dataDictDao.findOne(getDataDictWhereClause(dataDictCondition));
     }
 
-    private ResultVO validDataDict(DataDict dataDict, OperationType operationType) {
-        ResultVO validResult = new ResultVO(ResultVO.SUCCESS, I18nUtils.getMessage("jackie0.common.dataDict.success.tips", operationType.getName()));
+    private void validDataDict(DataDict dataDict, OperationType operationType) {
         if (dataDict == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.canNotBeNull"));
-            return validResult;
+            throw new BusinessException("jackie0.common.dataDict.canNotBeNull");
         }
-        validResult = ValidatorUtils.validateData(dataDict, true);
-        if (ResultVO.FAIL.equals(validResult.getErrorCode())) {
-            return validResult;
-        }
+        ValidatorUtils.validate(dataDict);
         DataDict dataDictTest = findDataDictByGroupCodeAndDictKey(dataDict.getGroupCode(), dataDict.getDictKey());
         if (operationType == OperationType.CREATE && dataDictTest != null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.alreadyExists", dataDict.getGroupCode(), dataDict.getDictKey()));
-            return validResult;
+            throw new BusinessException("jackie0.common.dataDict.alreadyExists", dataDict.getGroupCode(), dataDict.getDictKey());
         }
         if (operationType == OperationType.UPDATE && dataDictTest == null) {
-            validResult.setErrorCode(ResultVO.FAIL);
-            validResult.setErrorMsg(I18nUtils.getMessage("jackie0.common.dataDict.notExists", dataDict.getGroupCode(), dataDict.getDictKey()));
-            return validResult;
+            throw new BusinessException("jackie0.common.dataDict.notExists", dataDict.getGroupCode(), dataDict.getDictKey());
         }
-        return validResult;
     }
 
     private Specification<DataDict> getDataDictWhereClause(final DataDict dataDict) {

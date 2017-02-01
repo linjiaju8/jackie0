@@ -1,0 +1,49 @@
+spring:
+ # profiles不同环境配置标识，如开发、测试、生产环境等
+  profiles: development
+  # 应用名称，自定义
+  application:
+    name: showcase
+  messages:
+    basename: i18n/messages-common,i18n/messages-showcase
+  # 如果要访问WEB-INF下的视图文件开启如下配置
+  # 这里不配置suffix方便混合使用不同视图如同时使用jsp、html都可以，在Controller返回视图时带上后缀即可
+  # 特别的如果要访问WEB-INF下的html文件，必须配置com.jackie0.common.config.MvcConfiguration，jsp则不用
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix:
+  datasource:
+      # 参考druid连接池配置https://github.com/alibaba/druid
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/showcase
+      username: jackie0
+      password: jackie0
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      validation-query: select 1 from dual
+      filters: stat,wall,log4j
+  jpa:
+      # 为方便开发，一般在开发环境配置这几个参数，测试、生产仍以手动sql脚本为准，方便dba建模及统一管理
+      # jpa配置是否生成ddl
+      generate-ddl: true
+      hibernate:
+        # ddl自动方式，create、update等，这里在创建表时跑
+        ddl-auto: create
+      show-sql: true
+---
+spring:
+  profiles: test
+db:
+  url: jdbc:mysql://localhost/test
+  username: test
+  password: test

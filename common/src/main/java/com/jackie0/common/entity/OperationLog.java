@@ -237,4 +237,24 @@ public class OperationLog extends BaseEntity implements BaseOperationLog, Serial
     public void setNewDataParamName(String newDataParamName) {
         this.newDataParamName = newDataParamName;
     }
+
+    @Override
+    public String toString() {
+        return "OperationLog{" +
+                "operationLogId='" + operationLogId + '\'' +
+                ", operationUser='" + operationUser + '\'' +
+                ", operationTime=" + operationTime +
+                ", operationType='" + operationType + '\'' +
+                ", operationName='" + operationName + '\'' +
+                ", description='" + description + '\'' +
+                ", oldJsonData='" + oldJsonData + '\'' +
+                ", oldDataClass='" + oldDataClass + '\'' +
+                ", oldDataParamName='" + oldDataParamName + '\'' +
+                ", newJsonData='" + newJsonData + '\'' +
+                ", newDataClass='" + newDataClass + '\'' +
+                ", newDataParamName='" + newDataParamName + '\'' +
+                ", url='" + url + '\'' +
+                ", operationLogQueryParam='" + operationLogQueryParam + '\'' +
+                '}';
+    }
 }

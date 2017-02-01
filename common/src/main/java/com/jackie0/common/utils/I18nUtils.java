@@ -32,6 +32,9 @@ import java.util.Locale;
  * @since JDK 1.8
  */
 public class I18nUtils {
+    private I18nUtils() {
+    }
+
     /**
      * 获取国际化消息
      *
@@ -56,7 +59,7 @@ public class I18nUtils {
                 thisLocale = Constant.DEF_LOCALE;
             }
         }
-        ApplicationContext springContext = ApplicationContextRegister.getApplicationContext();
+        ApplicationContext springContext = ApplicationContextUtils.getApplicationContext();
         return springContext.getMessage(key, args, null, thisLocale);
     }
 }

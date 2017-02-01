@@ -16,5 +16,5 @@ import java.io.Serializable;
  * @since JDK 1.8
  */
 @NoRepositoryBean
-public interface BaseDao<T, ID extends Serializable> extends JpaSpecificationExecutor<T>, PagingAndSortingRepository<T, ID> {
+public interface BaseDao<T, K extends Serializable> extends JpaSpecificationExecutor<T>, PagingAndSortingRepository<T, K> {
 }

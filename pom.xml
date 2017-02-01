@@ -11,7 +11,8 @@
     <modules>
         <module>common</module>
         <module>platform</module>
-        <module>static-resource</module>
+        <module>resources</module>
+        <module>showcase</module>
     </modules>
 
     <name>jackie0</name>
@@ -39,6 +40,10 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <druid.version>1.0.20</druid.version>
         <mysql.version>5.1.18</mysql.version>
+        <joda-time.version>2.9.4</joda-time.version>
+        <sonar.version>2.7.1</sonar.version>
+        <itextpdf.version>7.0.1</itextpdf.version>
+        <jsoup.version>1.10.2</jsoup.version>
     </properties>
 
     <!-- dependencyManagement通常会在一个组织或者项目的最顶层的父POM 中看到dependencyManagement 元素。
@@ -125,11 +130,85 @@
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+
+            <!-- joda日期时间工具类 -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
+
+            <!-- itextpdf操作库 -->
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>kernel</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>layout</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/font-asian -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>font-asian</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/io -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>io</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/forms -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>forms</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/sign -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>sign</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.itextpdf/barcodes -->
+            <dependency>
+                <groupId>com.itextpdf</groupId>
+                <artifactId>barcodes</artifactId>
+                <version>${itextpdf.version}</version>
+            </dependency>
+
+            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <finalName>jackie0</finalName>
+        <!-- To define the plugin version in your parent POM -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

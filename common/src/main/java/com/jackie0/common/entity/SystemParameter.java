@@ -21,6 +21,11 @@ public class SystemParameter extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1112924222733736263L;
 
     /**
+     * 系统参数缓存前缀
+     */
+    public static final String DATA_SYSTEM_PARAMETER_KEY_PREFIX = Constant.DATA_CACHE_PREFIX + ".SystemParameter.";
+
+    /**
      * 主键
      */
     private String systemParameterId;
@@ -86,5 +91,15 @@ public class SystemParameter extends BaseEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemParameter{" +
+                "systemParameterId='" + systemParameterId + '\'' +
+                ", parameterKey='" + parameterKey + '\'' +
+                ", parameterValue='" + parameterValue + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
