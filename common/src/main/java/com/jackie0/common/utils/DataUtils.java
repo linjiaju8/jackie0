@@ -34,7 +34,7 @@ public class DataUtils {
     /**
      * 随机字符生成种子，去掉了容易混淆的一些字符如Oo0
      */
-    private static final String RANDOM_CHAR_SEEDS = "123456789abcdefghijmnqrstuvwyABCDEFGHJLMNQRSTUVWY";
+    private static final String RANDOM_CHAR_SEEDS = "123456789abcdefghijmnqrstuvwyABCDEFGHJLMNQRSTUVWY~!@#$%^&*()";
 
     /**
      * 随机数字生成种子
