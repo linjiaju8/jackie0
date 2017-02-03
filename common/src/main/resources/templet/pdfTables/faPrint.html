@@ -1,0 +1,78 @@
+<table id="faPrint">
+    <thead>
+    <tr>
+        <th colspan="{{rows}}" border="0" font-size="24" align="center">{{clientName}}结算单</th>
+    </tr>
+    <tr font-size="15">
+        <th border="0" colspan="{{showOutpatientNo?5:4}}" align="left">结算日期：{{minDate |
+            date:yyyy-MM-dd}} 至
+            {{maxDate | date:yyyy-MM-dd}}
+        </th>
+        <th border="0" colspan="5" align="left">结算单号：{{statementCode}}</th>
+    </tr>
+    <tr font-size="15">
+        <th border="0" colspan="{{showOutpatientNo?5:4}}" align="left">业务员：{{salesman}}</th>
+        <th border="0" colspan="5" align="left">区域：{{region}}</th>
+    </tr>
+    <tr font-size="14" border-bottom="0" align="center" name="dataTitle">
+        <th width="0.09">接收日期
+        </th>
+        <th width="0.09">条形码
+        </th>
+        <th width="0.10">病人姓名
+        </th>
+        <th if="showOutpatientNo" width="0.09">门诊号
+        </th>
+        <th>项目名称
+        </th>
+        <th width="0.11">临床科室
+        </th>
+        <th width="0.10">医生
+        </th>
+        <th width="0.09">医院价格
+        </th>
+        <th if="showActualPrice" width="0.09">实际价格
+        </th>
+        <th if="showHospitalCode" width="0.09">医院条码
+        </th>
+    </tr>
+    </thead>
+    <tbody dataList="dataList">
+    <tr>
+        <td>{{receiveDate | date:'yyyy-MM-dd'}}</td>
+        <td>{{barCode}}</td>
+        <td>{{patient}}</td>
+        <td if="showOutpatientNo">{{obj.patientNo}}</td>
+        <td>{{itemName}}</td>
+        <td>{{clinicalDepartment}}</td>
+        <td>{{doctor}}</td>
+        <td>{{hospitalPrice | number:2}}</td>
+        <td if="showActualPrice">{{actualPrice | number:2}}</td>
+        <td if="showHospitalCode">{{hospitalBarCode}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr font-size="13">
+        <td border="0" colspan="3">(本页小计)记录数：<span tindex="1" tdata="SubCount">##</span></td>
+        <td border="0" colspan="{{showOutpatientNo?2:1}}">医院价格：￥ <span
+                tindex="{{showOutpatientNo?8:7}}" tdata="SubSum" format="###,###.00">########</span>
+        </td>
+        <td border="0" if="showActualPrice" colspan="5">实际价格：￥ <span
+                tindex="{{showOutpatientNo?9:8}}" tdata="SubSum" format="###,###.00">########</span>
+        </td>
+    </tr>
+    <tr font-size="13">
+        <td border="0" colspan="3">(结算单总计)记录数：{{len}}</td>
+        <td border="0" colspan="{{showOutpatientNo?2:1}}">医院价格：￥ {{hospitalPrice | number:2}}</td>
+        <td border="0" colspan="5">实际价格：￥ {{actualPrice | number:2}}</td>
+    </tr>
+    <tr font-size="13">
+        <td border="0" colspan="{{rows}}">操作人：{{settlingPerson}}</td>
+    </tr>
+    <tr font-size="13">
+        <td border="0" colspan="{{rows}}" align="right">
+            第<span tdata="PageNO">###</span>页/共<span tdata="PageCount">###</span>页
+        </td><!--第1页/共1页-->
+    </tr>
+    </tfoot>
+</table>

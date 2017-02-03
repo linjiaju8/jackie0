@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.sql.Clob;
 import java.sql.Timestamp;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -192,8 +193,36 @@ public class DataUtils {
         T result = null;
         if (field != null) {
             field.setAccessible(Boolean.TRUE);
-            result = (T) ReflectionUtils.getField(field, object);
+            Object resultObject = ReflectionUtils.getField(field, object);
+            result = clazz.cast(resultObject);
         }
         return result;
+    }
+
+    /**
+     * 从bean或Map类型对象中获取指定的属性值
+     * 属性可用a.b.c形式的表达式嵌套,不支持集合类及数组
+     *
+     * @param object                 需要获取属性值的对象
+     * @param propertyNameExpression 属性表达式
+     * @param clazz                  获取的值类型
+     * @param <T>                    要获取值的泛型类型
+     * @return 指定的属性值
+     */
+    public static <T> T getFieldByExpression(Object object, String propertyNameExpression, Class<T> clazz) {
+        String[] propertyNameExpressions = propertyNameExpression.split("\\.");
+        Object currentObject = object;
+        for (String propertyName : propertyNameExpressions) {
+            if (StringUtils.isBlank(propertyName)) {
+                continue;
+            }
+            if (object instanceof Map) {
+                currentObject = ((Map) currentObject).get(propertyName);
+            } else {
+                currentObject = getField(currentObject, propertyName, Object.class);
+            }
+
+        }
+        return clazz.cast(currentObject);
     }
 }

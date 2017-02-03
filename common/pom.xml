@@ -172,46 +172,50 @@
         </dependency>
 
         <!-- itextpdf操作库 -->
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/layout -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>layout</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/font-asian -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>font-asian</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/io -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>io</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/forms -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>forms</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/sign -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>sign</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.itextpdf/barcodes -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>barcodes</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
         </dependency>
 
         <!-- jsoup HTML parser library @ http://jsoup.org/ -->
