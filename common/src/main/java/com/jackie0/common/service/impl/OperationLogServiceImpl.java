@@ -109,8 +109,10 @@ public class OperationLogServiceImpl implements OperationLogService {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(cb.equal(root.get("deletedFlag"), DeleteTag.IS_NOT_DELETED.getValue()));
             predicates.add(cb.equal(root.get("operationUser"), operationLog.getOperationUser()));
+            
             // 默认查近一个月数据
-            predicates.add(cb.between(root.get("creationDate"), new Timestamp(DateUtils.addMonths(new Date(), -1).getTime()), new Timestamp(System.currentTimeMillis())));
+            Predicate creationDatePredicate = cb.between(root.get("creationDate"), new Timestamp(DateUtils.addMonths(new Date(), -1).getTime()), new Timestamp(System.currentTimeMillis()));
+            predicates.add(creationDatePredicate);
             return query.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();
         };
     }

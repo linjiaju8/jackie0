@@ -19,3 +19,7 @@ hs_err_pid*
 /platform/target/
 /resources/target/
 /showcase/target/
+/.project
+/nb-configuration.xml
+/.settings/org.eclipse.m2e.core.prefs
+/.settings/org.eclipse.core.resources.prefs
