@@ -23,3 +23,4 @@ hs_err_pid*
 /nb-configuration.xml
 /.settings/org.eclipse.m2e.core.prefs
 /.settings/org.eclipse.core.resources.prefs
+showcase/src/main/webapp/META-INF/context.xml
