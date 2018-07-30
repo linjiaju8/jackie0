@@ -14,8 +14,8 @@ import java.util.Map;
 
 /**
  * HTTP接口请求封装
- * ClassName:HttpUtils <br/>
- * Date:     2015年09月06日 15:24 <br/>
+ * ClassName:HttpUtils
+ * Date:     2015年09月06日 15:24
  *
  * @author jackie0
  * @see
