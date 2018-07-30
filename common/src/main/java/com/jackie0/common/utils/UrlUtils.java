@@ -123,6 +123,7 @@ public final class UrlUtils {
     /**
      * 获取访问项目上下文 http://localhost:8080/jn-b2c/
      *
+     * @param request {@link HttpServletRequest}
      * @return 上下文如：http://localhost:8080/jn-b2c/
      */
     public static String getCurUrl(HttpServletRequest request) {
@@ -132,6 +133,7 @@ public final class UrlUtils {
     /**
      * 获取真实地址 http://localhost:8080/jn-b2c/bootstrap/demo/index.html
      *
+     * @param request {@link HttpServletRequest}
      * @return 真实地址如：http://localhost:8080/jn-b2c/bootstrap/demo/index.html
      */
     public static String getRealPath(HttpServletRequest request) {
