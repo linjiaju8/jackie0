@@ -19,8 +19,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Excel的样式信息
- * ClassName:ExcelStyle <br/>
- * Date:     2015年12月09日 16:26 <br/>
+ * ClassName:ExcelStyle
+ * Date:     2015年12月09日 16:26
  *
  * @author jackie0
  * @see
