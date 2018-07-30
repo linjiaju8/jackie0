@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 验证码验证过滤器
- * ClassName:CaptchaValidateFilter <br/>
- * Date:     2015年08月07日 16:24 <br/>
+ * ClassName:CaptchaValidateFilter
+ * Date:     2015年08月07日 16:24
  *
  * @author jackie0
  * @see
