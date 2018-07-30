@@ -24,8 +24,8 @@ import java.util.Random;
 
 /**
  * 数据处理转换工具类
- * ClassName:DataUtils <br/>
- * Date:     2015年09月09日 21:31 <br/>
+ * ClassName:DataUtils
+ * Date:     2015年09月09日 21:31
  *
  * @author jackie0
  * @since JDK 1.8
@@ -71,6 +71,7 @@ public class DataUtils {
      * 对文件名做对应的编码处理，已兼容中文文件名
      *
      * @param fileName 要做编码处理的文件名
+     * @param httpServletRequest {@link HttpServletRequest}
      * @return 编码后的文件名
      */
     public static String encodeFileName(String fileName, HttpServletRequest httpServletRequest) {
