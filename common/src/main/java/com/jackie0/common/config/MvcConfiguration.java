@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Autowired
-    private WebMvcProperties mvcProperties = new WebMvcProperties();
+    private final WebMvcProperties mvcProperties = new WebMvcProperties();
 
     @Bean
     public ViewResolver getViewResolver() {
