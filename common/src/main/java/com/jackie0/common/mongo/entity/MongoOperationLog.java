@@ -16,8 +16,8 @@ import java.util.Date;
 
 /**
  * 客户操作日志实体类
- * ClassName:CustLog <br/>
- * Date:     2015年08月11日 16:21 <br/>
+ * ClassName:CustLog
+ * Date:     2015年08月11日 16:21
  *
  * @author jackie0
  * @see
