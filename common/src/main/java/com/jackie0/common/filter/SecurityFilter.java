@@ -17,8 +17,8 @@ import java.util.Enumeration;
 
 /**
  * 安全过滤器，主要防止跨站脚本攻击（XXS）及跨站请求伪造（CSRF）
- * ClassName:SecurityFilter <br/>
- * Date:     2015年08月05日 9:53 <br/>
+ * ClassName:SecurityFilter
+ * Date:     2015年08月05日 9:53
  *
  * @author jackie0
  * @see
