@@ -8,10 +8,12 @@ import java.io.Serializable;
 
 /**
  * 通用Specification整合{@link JpaSpecificationExecutor}及{@link PagingAndSortingRepository}
- * ClassName:BaseDao <br/>
- * Date:     2015年08月04日 11:09 <br/>
+ * ClassName:BaseDao
+ * Date:     2015年08月04日 11:09
  *
  * @author jackie0
+ * @param <T> 需要持久化的实体类型
+ * @param <K> 需要持久化的实体对应的主键
  * @see
  * @since JDK 1.8
  */
