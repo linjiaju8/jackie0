@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * ClassName:CalendarUtils <br/>
- * Date:     2015年09月08日 14:43 <br/>
+ * ClassName:CalendarUtils
+ * Date:     2015年09月08日 14:43
  *
  * @author jackie0
  * @see
@@ -56,6 +56,7 @@ public class CalendarUtils {
     /**
      * 在原来的时间基础上做加减运算，得到的结果返一个新的日期
      *
+     * @param <T>    需要操作的日期时间类型
      * @param date   原有时间，该函数不会改变原有对象
      * @param field  the calendar field. {@link java.util.Calendar#DATE}
      * @param amount the amount of date or time to be added to the field.
