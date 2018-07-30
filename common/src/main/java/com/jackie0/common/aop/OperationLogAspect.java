@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 
 /**
  * 记录客户操作日志切面
- * ClassName:CustLogAspect <br/>
- * Date:     2015年08月14日 9:39 <br/>
+ * ClassName:CustLogAspect
+ * Date:     2015年08月14日 9:39
  *
  * @author jackie0
  * @see
@@ -56,6 +56,8 @@ public class OperationLogAspect {
      *
      * @param jp           包含了切入点信息的对象
      * @param operationLog {@link OperationLog} 注解
+     * @param retVal 目标方法的返回值
+     * @throws com.fasterxml.jackson.core.JsonProcessingException
      */
     @AfterReturning(value = "operationLogMeasuringPointcut(operationLog)", argNames = "jp,operationLog,retVal", returning = "retVal")
     public void logCustLog(JoinPoint jp, OperationLog operationLog, Object retVal) throws JsonProcessingException {
