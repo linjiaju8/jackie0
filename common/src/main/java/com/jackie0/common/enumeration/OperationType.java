@@ -4,8 +4,8 @@ import com.jackie0.common.utils.I18nUtils;
 
 /**
  * 操作类型枚举
- * ClassName:OperationType <br/>
- * Date:     2015年08月03日 14:32 <br/>
+ * ClassName:OperationType
+ * Date:     2015年08月03日 14:32
  *
  * @author jackie0
  * @see
@@ -18,8 +18,8 @@ public enum OperationType {
     UPDATE(I18nUtils.getMessage("jackie0.common.OperationType.update"), "update"),
     QUERY(I18nUtils.getMessage("jackie0.common.OperationType.query"), "query");
 
-    private String name;
-    private String value;
+    private final String name;
+    private final String value;
 
 
     OperationType(String name, String value) {
