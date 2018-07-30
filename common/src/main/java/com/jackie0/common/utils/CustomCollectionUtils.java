@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ClassName:CustomCollectionUtils <br/>
- * Date:     2015年11月03日 17:09 <br/>
+ * ClassName:CustomCollectionUtils
+ * Date:     2015年11月03日 17:09
  *
  * @author jackie0
  * @since JDK 1.8
