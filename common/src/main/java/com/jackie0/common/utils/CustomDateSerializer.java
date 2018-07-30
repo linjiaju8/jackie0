@@ -14,8 +14,8 @@ import java.util.Date;
 
 /**
  * 本地时间JSON序列化处理类
- * ClassName:CustomDateSerializer <br/>
- * Date:     2015年10月16日 14:13 <br/>
+ * ClassName:CustomDateSerializer
+ * Date:     2015年10月16日 14:13
  *
  * @author jackie0
  * @since JDK 1.8
