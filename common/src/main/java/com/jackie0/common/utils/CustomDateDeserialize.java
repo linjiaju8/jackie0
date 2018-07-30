@@ -16,8 +16,8 @@ import java.util.Date;
 
 /**
  * 本地时间JSON反序列化处理类
- * ClassName:CustomDateDeserialize <br/>
- * Date:     2015年10月16日 14:13 <br/>
+ * ClassName:CustomDateDeserialize
+ * Date:     2015年10月16日 14:13
  *
  * @author jackie0
  * @since JDK 1.8
@@ -52,7 +52,7 @@ public class CustomDateDeserialize extends JsonDeserializer<Date> {
                 try {
                     formattedDate = formatDate(formattedDateText, dateFormat);
                     break; // 有匹配的格式转换成功则跳出匹配，返回结果
-                } catch (Exception e) {
+                } catch (ParseException e) {
                     formattedDate = null;
                     LOGGER.debug("日期{}按照格式{}转换日期异常-->{},跳到下一个格式！", formattedDateText, dateFormat, e);
                     if (index == dateFormats.length - 1) {
