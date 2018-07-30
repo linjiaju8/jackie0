@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 
 /**
  * 实体或VO中可复用部分
- * ClassName:BaseEntity <br/>
- * Date:     2015年11月25日 10:34 <br/>
+ * ClassName:BaseEntity
+ * Date:     2015年11月25日 10:34
  *
  * @author jackie0
  * @see
