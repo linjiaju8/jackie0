@@ -13,8 +13,8 @@ import javax.servlet.ServletResponse;
 
 /**
  * 自定义form表单验证过滤器,先通过验证码验证过滤器，如果验证码错误就不再验证用户名密码
- * ClassName:WsFormAuthenticationFilter <br/>
- * Date:     2015年08月07日 16:50 <br/>
+ * ClassName:WsFormAuthenticationFilter
+ * Date:     2015年08月07日 16:50
  *
  * @author jackie0
  * @see
