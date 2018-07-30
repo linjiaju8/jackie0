@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 结果VO，需要返回成功\失败操作结果时统一使用该VO
  *
  * @author jackie0
+ * @param <T> result对象的类型
  * @since Java8
  * date 2016-06-15 16:17
  */
