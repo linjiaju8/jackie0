@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 
 /**
  * 分页请求信息
- * ClassName:PageRequestInfo <br/>
- * Date:     2015年08月08日 16:43 <br/>
+ * ClassName:PageRequestInfo
+ * Date:     2015年08月08日 16:43
  *
  * @author jackie0
  * @see
