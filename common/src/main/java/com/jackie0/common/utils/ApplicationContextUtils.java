@@ -9,8 +9,8 @@ import javax.annotation.PostConstruct;
 
 /**
  * spring上下文注册类，方便在非spring容器管理的类中调用spring容器相关方法
- * ClassName:ApplicationContextRegister <br/>
- * Date:     2015年09月05日 17:31 <br/>
+ * ClassName:ApplicationContextRegister
+ * Date:     2015年09月05日 17:31
  *
  * @author jackie0
  * @since JDK 1.8
