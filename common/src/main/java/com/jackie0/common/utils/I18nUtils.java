@@ -24,8 +24,8 @@ import java.util.Locale;
 
 /**
  * 国际化资源获取工具类
- * ClassName:I18nUtils <br/>
- * Date:     2015年08月05日 10:44 <br/>
+ * ClassName:I18nUtils
+ * Date:     2015年08月05日 10:44
  *
  * @author jackie0
  * @see
