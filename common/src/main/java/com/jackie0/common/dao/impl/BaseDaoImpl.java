@@ -22,8 +22,8 @@ import java.util.Map;
 
 /**
  * spring-data-jpa公用DAO实现
- * ClassName:BaseDaoImpl <br/>
- * Date:     2015年08月29日 10:05 <br/>
+ * ClassName:BaseDaoImpl
+ * Date:     2015年08月29日 10:05
  *
  * @author jackie0
  * @see
@@ -111,7 +111,7 @@ public class BaseDaoImpl implements BaseDaoPlus {
         // 分离内存中受EntityManager管理的实体bean，让VM进行垃圾回收
         entityManager.clear();
         if (list != null) {
-            new PageImpl<>(list, e.getPageRequest(), total);
+            return new PageImpl<>(list, e.getPageRequest(), total);
         }
         return null;
     }
