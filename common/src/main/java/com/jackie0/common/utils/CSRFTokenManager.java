@@ -33,13 +33,13 @@ public final class CSRFTokenManager {
      * 加密方式
      */
     @Value("${shiro.password.algorithmName}")
-    private static String algorithmName = "md5";
+    private static final String ALGORITHM_NAME = "md5";
 
     /**
      * 迭代深度
      */
     @Value("${shiro.password.hashIterations}")
-    private static int hashIterations = 2;
+    private static final int HASH_ITERATIONS = 2;
 
     private CSRFTokenManager() {
     }
@@ -70,10 +70,10 @@ public final class CSRFTokenManager {
         if (null == token || flushTag) {
             String random = String.valueOf(new SecureRandom().nextLong());
             token = new SimpleHash(
-                    algorithmName,
+                    ALGORITHM_NAME,
                     random,
                     ByteSource.Util.bytes(randomNumberGenerator.nextBytes().toHex()),
-                    hashIterations).toHex();
+                    HASH_ITERATIONS).toHex();
             session.setAttribute(CSRF_TOKEN_FOR_SESSION_ATTR_NAME + page, token);
         }
         return token;
