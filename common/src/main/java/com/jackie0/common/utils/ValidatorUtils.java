@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
  *
  * @author jackie0
  * @date 2015/03/02
- * </p>
- * Copyright © 2014	OP-MOBILE
+ * 
+ * Copyright © 2014
  */
 public class ValidatorUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidatorUtils.class);
