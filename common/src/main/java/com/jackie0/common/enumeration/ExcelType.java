@@ -14,8 +14,8 @@ package com.jackie0.common.enumeration;
 
 /**
  * Excel类型枚举
- * ClassName:ExcelType <br/>
- * Date:     2015年08月03日 14:32 <br/>
+ * ClassName:ExcelType
+ * Date:     2015年08月03日 14:32
  *
  * @author jackie0
  * @see
@@ -25,8 +25,8 @@ public enum ExcelType {
     XLS("xls", 1),
     XLSX("xlsx", 2);
 
-    private String name;
-    private int value;
+    private final String name;
+    private final int value;
 
 
     ExcelType(String name, int value) {
