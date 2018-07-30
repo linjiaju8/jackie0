@@ -11,8 +11,8 @@ import java.util.Map;
 
 /**
  * {@link BaseDao}扩展类
- * ClassName:BaseDaoPlus <br/>
- * Date:     2015年08月04日 11:09 <br/>
+ * ClassName:BaseDaoPlus
+ * Date:     2015年08月04日 11:09
  *
  * @author jackie0
  * @see
