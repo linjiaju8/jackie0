@@ -4,8 +4,8 @@ import com.jackie0.common.utils.I18nUtils;
 
 /**
  * 系统删除标识
- * ClassName:DeleteTag <br/>
- * Date:     2015年08月03日 14:32 <br/>
+ * ClassName:DeleteTag
+ * Date:     2015年08月03日 14:32
  *
  * @author jackie0
  * @see
@@ -15,8 +15,8 @@ public enum DeleteTag {
     IS_DELETED(I18nUtils.getMessage("jackie0.common.DeleteTag.alreadyDeleted"), "1"),
     IS_NOT_DELETED(I18nUtils.getMessage("jackie0.common.DeleteTag.notDelete"), "0");
 
-    private String name;
-    private String value;
+    private final String name;
+    private final String value;
 
 
     DeleteTag(String name, String value) {
